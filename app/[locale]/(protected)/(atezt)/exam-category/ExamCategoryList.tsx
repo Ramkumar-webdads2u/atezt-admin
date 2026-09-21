@@ -270,25 +270,25 @@ function ExamCategoryList() {
            DURATION
         ============================================== */
 
-      {
-        accessorKey: "duration_minutes",
+      // {
+      //   accessorKey: "duration_minutes",
 
-        header: "Duration",
+      //   header: "Duration",
 
-        cell: ({ row }) => <div>{row.original.duration_minutes ?? 0} Min</div>,
-      },
+      //   cell: ({ row }) => <div>{row.original.duration_minutes ?? 0} Min</div>,
+      // },
 
       /* ==============================================
            TOTAL MARKS
         ============================================== */
 
-      {
-        accessorKey: "total_marks",
+      // {
+      //   accessorKey: "total_marks",
 
-        header: "Total Marks",
+      //   header: "Total Marks",
 
-        cell: ({ row }) => <div>{row.original.total_marks ?? 0}</div>,
-      },
+      //   cell: ({ row }) => <div>{row.original.total_marks ?? 0}</div>,
+      // },
 
       /* ==============================================
            STATUS
@@ -522,25 +522,25 @@ function ExamCategoryList() {
                 ),
               },
 
-              {
-                key: "duration",
+              // {
+              //   key: "duration",
 
-                label: "Duration",
+              //   label: "Duration",
 
-                colSpan: 1,
+              //   colSpan: 1,
 
-                render: (item) => `${item.duration_minutes ?? 0} Min`,
-              },
+              //   render: (item) => `${item.duration_minutes ?? 0} Min`,
+              // },
 
-              {
-                key: "total_marks",
+              // {
+              //   key: "total_marks",
 
-                label: "Total Marks",
+              //   label: "Total Marks",
 
-                colSpan: 1,
+              //   colSpan: 1,
 
-                render: (item) => item.total_marks ?? 0,
-              },
+              //   render: (item) => item.total_marks ?? 0,
+              // },
 
               {
                 key: "status",
