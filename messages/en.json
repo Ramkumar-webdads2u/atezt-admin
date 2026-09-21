@@ -1,0 +1,14 @@
+{
+  "Index": {
+    "title": "ATEZT Admin Panel"
+  },
+  "Menu": {
+    "overview": "Overview",
+    "examCategory": "Exam Category",
+    "questionType": "Question Type",
+    "coupon": "Coupon",
+    "exams": "Exams",
+    "users": "Users",
+    "results": "Results"
+  }
+}

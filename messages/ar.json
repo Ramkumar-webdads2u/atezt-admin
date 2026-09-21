@@ -1,0 +1,14 @@
+{
+  "Index": {
+    "title": "لوحة تحكم ATEZT"
+  },
+  "Menu": {
+    "overview": "نظرة عامة",
+    "examCategory": "فئة الاختبار",
+    "questionType": "نوع السؤال",
+    "coupon": "القسيمة",
+    "exams": "الاختبارات",
+    "users": "المستخدمون",
+    "results": "النتائج"
+  }
+}
