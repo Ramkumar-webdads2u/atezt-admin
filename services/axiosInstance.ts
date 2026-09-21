@@ -1,5 +1,5 @@
 import axios from "axios";
-import { APIURLS } from "./config";
+import { APIURLS } from "./apiconfig";
 import { getAccessToken, clearAuthCookies } from "./authCookie";
 
 const axiosInstance = axios.create({

@@ -1,7 +1,7 @@
 // src/services/global.ts
 import axios from "./axiosInstance";
 import axiosLib from "axios";
-import { APIURLS } from "./config";
+import { APIURLS } from "./apiconfig";
 import { QueryFunctionContext } from "@tanstack/react-query";
 
 export const getApiMethos = async <T>({
