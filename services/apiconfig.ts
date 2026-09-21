@@ -77,7 +77,8 @@ export const APICONSTANT = {
   UpdateAdminUser: "admin-users/{user_id}",
   DeleteAdminUser: "admin-users/{user_id}",
   UpdateAdminUserStatus: "admin-users/{user_id}/status",
-  GetUserExamDetails: "admin-users/{user_id}/exam-details",
+  // GetUserExamDetails: "admin-users/{user_id}/exam-details",
+  GetUserExamDetails: "admin-users/exam-details/",
 
   // =========================
   // RESULTS
