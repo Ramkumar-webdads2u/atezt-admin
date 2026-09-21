@@ -19,13 +19,14 @@ export interface ApiResponse {
 }
 
 export default function useDeleteMutation(
-  onSuccessRedirect?: string
+  onSuccessRedirect?: string,
 ): UseMutationResult<ApiResponse | FormData, unknown, MutationParams> {
   // const navigate = useNavigate();
 
   return useMutation<ApiResponse | FormData, unknown, MutationParams>({
     mutationFn: async ({ url, body }) => {
-      return await apiMethod("delete", url.apiUrl, body) as ApiResponse | FormData;
+      return (await apiMethod("delete", url.apiUrl, body)) as
+        ApiResponse | FormData;
     },
     onSuccess: (data) => {
       if (data instanceof FormData) {

@@ -1,5 +1,11 @@
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog"
-import { Button } from "@/components/ui/button"
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogFooter,
+} from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
 
 interface StatusConfirmModalProps {
   open: boolean;
@@ -9,7 +15,13 @@ interface StatusConfirmModalProps {
   description: string;
 }
 
-export default function StatusConfirmModal({ open, onClose, onConfirm, title, description }: StatusConfirmModalProps) {
+export default function StatusConfirmModal({
+  open,
+  onClose,
+  onConfirm,
+  title,
+  description,
+}: StatusConfirmModalProps) {
   return (
     <Dialog open={open} onOpenChange={onClose}>
       <DialogContent>
@@ -18,7 +30,9 @@ export default function StatusConfirmModal({ open, onClose, onConfirm, title, de
         </DialogHeader>
         <p className="text-sm text-gray-600">{description}</p>
         <DialogFooter className="mt-4">
-          <Button variant="outline" onClick={onClose}>Cancel</Button>
+          <Button variant="outline" onClick={onClose}>
+            Cancel
+          </Button>
           <Button onClick={onConfirm}>{title}</Button>
         </DialogFooter>
       </DialogContent>

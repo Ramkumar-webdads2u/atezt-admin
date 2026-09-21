@@ -5,14 +5,14 @@ import QuestionTypeList from "./QuestionTypeList";
 function DashbaordPage() {
   return (
     <>
-        <SiteBreadcrumb />
-        <div className="space-y-6">
-          <Card>
-            <CardContent className="p-0">
-              <QuestionTypeList />
-            </CardContent>
-          </Card>
-        </div>
+      <SiteBreadcrumb />
+      <div className="space-y-6">
+        <Card>
+          <CardContent className="p-0">
+            <QuestionTypeList />
+          </CardContent>
+        </Card>
+      </div>
     </>
   );
 }

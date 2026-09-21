@@ -1,4 +1,3 @@
-
 "use client";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -12,11 +11,7 @@ type Inputs = {
 };
 
 const RegForm = () => {
-  const {
-    register,
-    handleSubmit,
-    watch,
-  } = useForm<Inputs>();
+  const { register, handleSubmit, watch } = useForm<Inputs>();
   const onSubmit: SubmitHandler<Inputs> = (data) => console.log(data);
   console.log(watch("example"));
 
@@ -52,10 +47,7 @@ const RegForm = () => {
       </div>
       <div className="flex justify-between">
         <div className="flex gap-2 items-center">
-          <Checkbox
-            id="checkbox"
-            defaultChecked
-          />
+          <Checkbox id="checkbox" defaultChecked />
           <Label htmlFor="checkbox">
             You Accept Our Terms And Conditions And Privacy Policy
           </Label>

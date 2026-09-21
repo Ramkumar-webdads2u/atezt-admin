@@ -69,10 +69,9 @@ const SidebarNav = ({ menuList }: { menuList: Group[] }) => {
                           {
                             "bg-secondary text-default hover:bg-secondary":
                               active && config.sidebarColor !== "light",
-                          }
+                          },
                         )}
                       >
-
                         <Link href={href}>
                           {icon && (
                             <Icon icon={icon} className="h-5 w-5 me-2" />
@@ -92,8 +91,8 @@ const SidebarNav = ({ menuList }: { menuList: Group[] }) => {
                       )
                     )}
                   </React.Fragment>
-                )
-              )
+                ),
+              ),
             )}
           </div>
         </nav>

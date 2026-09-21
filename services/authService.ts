@@ -24,10 +24,7 @@ import {
   clearAuthCookies,
 } from "./authCookie";
 
-export const setToken = (
-  accessToken: string,
-  refreshToken?: string,
-) => {
+export const setToken = (accessToken: string, refreshToken?: string) => {
   setAuthCookies(accessToken, refreshToken);
 };
 
@@ -66,26 +63,19 @@ export const loginApiMethod = async (payload: {
 }): Promise<LoginResponse> => {
   console.log("🔐 LOGIN REQUEST");
 
-  console.log(
-    "Endpoint:",
-    payload.url.apiUrl
-  );
+  console.log("Endpoint:", payload.url.apiUrl);
 
   console.log("Payload:", {
     email: payload.body.email,
     password: "********",
   });
 
-  const response =
-    await axios.post<LoginResponse>(
-      payload.url.apiUrl,
-      payload.body
-    );
-
-  console.log(
-    "✅ LOGIN RESPONSE:",
-    response.data
+  const response = await axios.post<LoginResponse>(
+    payload.url.apiUrl,
+    payload.body,
   );
+
+  console.log("✅ LOGIN RESPONSE:", response.data);
 
   return response.data;
 };

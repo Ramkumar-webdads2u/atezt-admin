@@ -1,16 +1,11 @@
 export const ACCESS_TOKEN_COOKIE = "access_token";
 export const REFRESH_TOKEN_COOKIE = "refresh_token";
 
-export const setAuthCookies = (
-  accessToken: string,
-  refreshToken?: string
-) => {
-  document.cookie =
-    `${ACCESS_TOKEN_COOKIE}=${encodeURIComponent(accessToken)}; path=/; SameSite=Lax`;
+export const setAuthCookies = (accessToken: string, refreshToken?: string) => {
+  document.cookie = `${ACCESS_TOKEN_COOKIE}=${encodeURIComponent(accessToken)}; path=/; SameSite=Lax`;
 
   if (refreshToken) {
-    document.cookie =
-      `${REFRESH_TOKEN_COOKIE}=${encodeURIComponent(refreshToken)}; path=/; SameSite=Lax`;
+    document.cookie = `${REFRESH_TOKEN_COOKIE}=${encodeURIComponent(refreshToken)}; path=/; SameSite=Lax`;
   }
 };
 
@@ -22,7 +17,7 @@ export const getAccessToken = (): string | null => {
   const cookies = document.cookie.split("; ");
 
   const tokenCookie = cookies.find((cookie) =>
-    cookie.startsWith(`${ACCESS_TOKEN_COOKIE}=`)
+    cookie.startsWith(`${ACCESS_TOKEN_COOKIE}=`),
   );
 
   if (!tokenCookie) {
@@ -30,9 +25,7 @@ export const getAccessToken = (): string | null => {
   }
 
   return decodeURIComponent(
-    tokenCookie.substring(
-      `${ACCESS_TOKEN_COOKIE}=`.length
-    )
+    tokenCookie.substring(`${ACCESS_TOKEN_COOKIE}=`.length),
   );
 };
 
@@ -44,7 +37,7 @@ export const getRefreshToken = (): string | null => {
   const cookies = document.cookie.split("; ");
 
   const tokenCookie = cookies.find((cookie) =>
-    cookie.startsWith(`${REFRESH_TOKEN_COOKIE}=`)
+    cookie.startsWith(`${REFRESH_TOKEN_COOKIE}=`),
   );
 
   if (!tokenCookie) {
@@ -52,16 +45,12 @@ export const getRefreshToken = (): string | null => {
   }
 
   return decodeURIComponent(
-    tokenCookie.substring(
-      `${REFRESH_TOKEN_COOKIE}=`.length
-    )
+    tokenCookie.substring(`${REFRESH_TOKEN_COOKIE}=`.length),
   );
 };
 
 export const clearAuthCookies = () => {
-  document.cookie =
-    `${ACCESS_TOKEN_COOKIE}=; path=/; max-age=0`;
+  document.cookie = `${ACCESS_TOKEN_COOKIE}=; path=/; max-age=0`;
 
-  document.cookie =
-    `${REFRESH_TOKEN_COOKIE}=; path=/; max-age=0`;
+  document.cookie = `${REFRESH_TOKEN_COOKIE}=; path=/; max-age=0`;
 };

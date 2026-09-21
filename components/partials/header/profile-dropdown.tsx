@@ -1,12 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import {
-  User,
-  Settings,
-  LogOut,
-  ChevronDown,
-} from "lucide-react";
+import { User, Settings, LogOut, ChevronDown } from "lucide-react";
 import { useRouter } from "@/components/navigation";
 import { clearAuthCookies } from "@/services/authCookie";
 import { showToast } from "@/lib/toastSonner";
@@ -73,10 +68,7 @@ const ProfileDropdown = () => {
     document.addEventListener("mousedown", handleClickOutside);
 
     return () => {
-      document.removeEventListener(
-        "mousedown",
-        handleClickOutside,
-      );
+      document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
 
@@ -117,13 +109,9 @@ const ProfileDropdown = () => {
 
         {/* User Info */}
         <div className="hidden text-left lg:block">
-          <p className="text-sm font-medium leading-none">
-            Admin
-          </p>
+          <p className="text-sm font-medium leading-none">Admin</p>
 
-          <p className="mt-1 text-xs text-muted-foreground">
-            Administrator
-          </p>
+          <p className="mt-1 text-xs text-muted-foreground">Administrator</p>
         </div>
 
         <ChevronDown
@@ -150,9 +138,7 @@ const ProfileDropdown = () => {
             </div>
 
             <div className="min-w-0">
-              <p className="truncate text-sm font-semibold">
-                Admin
-              </p>
+              <p className="truncate text-sm font-semibold">Admin</p>
 
               {/* <p className="truncate text-xs text-muted-foreground">
                 admin@atezt.com

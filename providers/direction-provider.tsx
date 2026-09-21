@@ -1,23 +1,25 @@
-'use client'
-import React from 'react'
-import { DirectionProvider as RadixDirProvider } from '@radix-ui/react-direction';
-import { useConfig } from '@/hooks/use-config';
+"use client";
+import React from "react";
+import { DirectionProvider as RadixDirProvider } from "@radix-ui/react-direction";
+import { useConfig } from "@/hooks/use-config";
 
-const DirectionProvider = ({ direction, children }: { direction: any, children: React.ReactNode }) => {
-    const [, setConfig] = useConfig();
+const DirectionProvider = ({
+  direction,
+  children,
+}: {
+  direction: any;
+  children: React.ReactNode;
+}) => {
+  const [, setConfig] = useConfig();
 
-    React.useEffect(() => {
-        setConfig((prevConfig) => ({
-            ...prevConfig,
-            isRtl: direction === 'rtl',
-        }));
+  React.useEffect(() => {
+    setConfig((prevConfig) => ({
+      ...prevConfig,
+      isRtl: direction === "rtl",
+    }));
+  }, [direction, setConfig]);
 
-    }, [direction, setConfig]);
+  return <RadixDirProvider dir={direction}>{children}</RadixDirProvider>;
+};
 
-    return (
-        <RadixDirProvider dir={direction}>
-            {children}</RadixDirProvider>
-    )
-}
-
-export default DirectionProvider
+export default DirectionProvider;

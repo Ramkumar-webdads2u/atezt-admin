@@ -25,7 +25,9 @@ export default function NetworkErrorUI() {
         <div className="dark:text-white text-base font-normal mb-10">
           Please try loading the dashboard again.
         </div>
-        {failed && <p className="text-sm text-destructive mb-4">Please try again.</p>}
+        {failed && (
+          <p className="text-sm text-destructive mb-4">Please try again.</p>
+        )}
       </div>
       <div className="max-w-75 mx-auto w-full">
         <button

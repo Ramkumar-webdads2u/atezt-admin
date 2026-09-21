@@ -1,4 +1,4 @@
-import { Link } from '@/i18n/routing';
+import { Link } from "@/i18n/routing";
 import Lock from "@/components/partials/auth/lock";
 import Copyright from "@/components/partials/auth/copyright";
 import Image from "next/image";

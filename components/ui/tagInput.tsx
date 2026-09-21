@@ -50,8 +50,8 @@ export default function TagInput({
   const toggleActive = (index: number) => {
     onChange(
       value.map((opt, i) =>
-        i === index ? { ...opt, isActive: !opt.isActive } : opt
-      )
+        i === index ? { ...opt, isActive: !opt.isActive } : opt,
+      ),
     );
   };
 
@@ -74,8 +74,8 @@ export default function TagInput({
     ) {
       onChange(
         value.map((opt, i) =>
-          i === editingIndex ? { ...opt, label: trimmed } : opt
-        )
+          i === editingIndex ? { ...opt, label: trimmed } : opt,
+        ),
       );
     }
     setEditingIndex(null);
@@ -122,9 +122,10 @@ export default function TagInput({
           <span
             key={opt._id ?? `${opt.label}-${index}`}
             className={`inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-sm font-medium leading-none border transition-colors
-              ${opt.isActive
-                ? "bg-primary/10 text-primary border-primary/20"
-                : "bg-muted text-muted-foreground border-border line-through"
+              ${
+                opt.isActive
+                  ? "bg-primary/10 text-primary border-primary/20"
+                  : "bg-muted text-muted-foreground border-border line-through"
               }`}
           >
             {/* ── Inline edit input OR label ── */}
@@ -157,7 +158,9 @@ export default function TagInput({
             {!disabled && editingIndex !== index && (
               <button
                 type="button"
-                title={opt.isActive ? "Click to deactivate" : "Click to activate"}
+                title={
+                  opt.isActive ? "Click to deactivate" : "Click to activate"
+                }
                 onClick={(e) => {
                   e.stopPropagation();
                   toggleActive(index);
@@ -213,17 +216,19 @@ export default function TagInput({
           </kbd>{" "}
           tag to edit ·{" "}
           <span className="inline-flex items-center gap-1">
-            <span className="w-2 h-2 rounded-full bg-green-500 inline-block" />
-            = active
+            <span className="w-2 h-2 rounded-full bg-green-500 inline-block" />=
+            active
           </span>{" "}
           ·{" "}
           <span className="inline-flex items-center gap-1">
-            <span className="w-2 h-2 rounded-full bg-red-400 inline-block" />
-            = inactive
+            <span className="w-2 h-2 rounded-full bg-red-400 inline-block" />=
+            inactive
           </span>
         </p>
         {maxTags && (
-          <p className={`text-xs ${isAtMax ? "text-destructive" : "text-muted-foreground"}`}>
+          <p
+            className={`text-xs ${isAtMax ? "text-destructive" : "text-muted-foreground"}`}
+          >
             {value.length}/{maxTags}
           </p>
         )}

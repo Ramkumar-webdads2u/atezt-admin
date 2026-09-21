@@ -1,16 +1,15 @@
-// user data 
+// user data
 const users = [
   {
     name: "nextcode",
     email: "admin@nexcodez.com",
     password: "123456",
-    image: '/images/users/user-1.jpg',
+    image: "/images/users/user-1.jpg",
   },
-  
-]
+];
 
-export type User = (typeof users)[number]
+export type User = (typeof users)[number];
 
 export const getUserByEmail = (email: string) => {
-  return users.find((user) => user.email === email)
-}
+  return users.find((user) => user.email === email);
+};

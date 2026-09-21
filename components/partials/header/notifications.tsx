@@ -17,13 +17,48 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 const PAGE_SIZE = 6;
 
 const DUMMY_NOTIFICATIONS = [
-  { id: 1, title: "New Exam Created", desc: "A new exam was added to the admin panel.", time: "2 min ago" },
-  { id: 2, title: "New User Registered", desc: "A new student account was registered.", time: "15 min ago" },
-  { id: 3, title: "Exam Completed", desc: "An exam has been completed by students.", time: "1 hour ago" },
-  { id: 4, title: "Coupon Updated", desc: "A coupon was updated successfully.", time: "2 hours ago" },
-  { id: 5, title: "Results Ready", desc: "New exam results are available.", time: "Today" },
-  { id: 6, title: "System Update", desc: "Dashboard frontend was updated.", time: "Today" },
-  { id: 7, title: "Question Type Added", desc: "A question type was added.", time: "Yesterday" },
+  {
+    id: 1,
+    title: "New Exam Created",
+    desc: "A new exam was added to the admin panel.",
+    time: "2 min ago",
+  },
+  {
+    id: 2,
+    title: "New User Registered",
+    desc: "A new student account was registered.",
+    time: "15 min ago",
+  },
+  {
+    id: 3,
+    title: "Exam Completed",
+    desc: "An exam has been completed by students.",
+    time: "1 hour ago",
+  },
+  {
+    id: 4,
+    title: "Coupon Updated",
+    desc: "A coupon was updated successfully.",
+    time: "2 hours ago",
+  },
+  {
+    id: 5,
+    title: "Results Ready",
+    desc: "New exam results are available.",
+    time: "Today",
+  },
+  {
+    id: 6,
+    title: "System Update",
+    desc: "Dashboard frontend was updated.",
+    time: "Today",
+  },
+  {
+    id: 7,
+    title: "Question Type Added",
+    desc: "A question type was added.",
+    time: "Yesterday",
+  },
 ];
 
 const Notifications = () => {
@@ -51,7 +86,10 @@ const Notifications = () => {
         >
           <Icon icon="heroicons-outline:bell" className="h-5 w-5" />
           {notifications.length > 0 && (
-            <Badge className="w-4 h-4 p-0 text-[8px] rounded-full font-semibold items-center justify-center absolute left-[calc(100%-12px)] bottom-[calc(100%-10px)]" color="destructive">
+            <Badge
+              className="w-4 h-4 p-0 text-[8px] rounded-full font-semibold items-center justify-center absolute left-[calc(100%-12px)] bottom-[calc(100%-10px)]"
+              color="destructive"
+            >
               {notifications.length}
             </Badge>
           )}
@@ -74,7 +112,9 @@ const Notifications = () => {
 
         <ScrollArea className="no-scrollbar">
           {notifications.length === 0 ? (
-            <p className="p-4 text-sm text-gray-400 text-center">No notifications</p>
+            <p className="p-4 text-sm text-gray-400 text-center">
+              No notifications
+            </p>
           ) : (
             paginated.map((item) => (
               <DropdownMenuItem key={item.id} className="flex gap-3 p-3">
@@ -103,7 +143,9 @@ const Notifications = () => {
             >
               <ChevronLeft className="h-4 w-4" />
             </button>
-            <span className="text-xs text-gray-500">Page {page} of {totalPages}</span>
+            <span className="text-xs text-gray-500">
+              Page {page} of {totalPages}
+            </span>
             <button
               className="h-7 w-7 p-0 cursor-pointer"
               onClick={(e) => {

@@ -1,4 +1,4 @@
-import { Link } from '@/i18n/routing';
+import { Link } from "@/i18n/routing";
 import LoginForm from "@/components/partials/auth/login-form";
 import Social from "@/components/partials/auth/social";
 import Image from "next/image";

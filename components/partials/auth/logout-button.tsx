@@ -25,7 +25,6 @@
 
 // export default LogoutButton;
 
-
 "use client";
 
 import { LogOut } from "lucide-react";

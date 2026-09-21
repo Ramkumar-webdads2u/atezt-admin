@@ -37,14 +37,15 @@ export const inputVariants = cva(
       color: "default",
       size: "default",
     },
-  }
+  },
 );
 
 export interface InputProps
-  extends React.InputHTMLAttributes<HTMLInputElement>,
-  VariantProps<typeof inputVariants> {
-  color?: InputColor
-  size?: any
+  extends
+    React.InputHTMLAttributes<HTMLInputElement>,
+    VariantProps<typeof inputVariants> {
+  color?: InputColor;
+  size?: any;
 }
 
 interface PasswordInputProps extends Omit<InputProps, "type"> {}
@@ -68,11 +69,15 @@ const PasswordInput = React.forwardRef<HTMLInputElement, PasswordInputProps>(
           onClick={() => setShowPassword((prev) => !prev)}
           className="absolute top-1/2 right-2 -translate-y-1/2 text-gray-500 hover:text-gray-700"
         >
-          {showPassword ? <Eye className="h-4 w-4" /> : <EyeOff className="h-4 w-4" />}
+          {showPassword ? (
+            <Eye className="h-4 w-4" />
+          ) : (
+            <EyeOff className="h-4 w-4" />
+          )}
         </button>
       </div>
     );
-  }
+  },
 );
 
 PasswordInput.displayName = "PasswordInput";

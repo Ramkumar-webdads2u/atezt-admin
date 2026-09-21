@@ -84,10 +84,6 @@
 
 // export default queryClient;
 
-
-
-
-
 // src/services/queryClient.ts
 
 // import { QueryClient, QueryCache } from "@tanstack/react-query";
@@ -137,8 +133,6 @@
 //   persister: localStoragePersister, // Use our localStorage persister
 //   maxAge: 1000 * 60 * 60 * 24, // Expire cache after 24 hours
 // });
-
-
 
 // react-query-client.ts
 import { QueryClient, QueryCache } from "@tanstack/react-query";

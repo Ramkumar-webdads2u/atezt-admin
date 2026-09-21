@@ -30,63 +30,50 @@ interface ErrorResponse {
 export default function useLoginMutation() {
   const router = useRouter();
 
-  return useMutation<
-    LoginResponse,
-    unknown,
-    LoginApiProps
-  >({
+  return useMutation<LoginResponse, unknown, LoginApiProps>({
     mutationFn: loginApiMethod,
 
     onSuccess: (data) => {
-  console.log("✅ LOGIN SUCCESS");
-  console.log("Login data:", data);
+      console.log("✅ LOGIN SUCCESS");
+      console.log("Login data:", data);
 
-  if (!data.success) {
-    showToast.error(data.message || "Login failed");
-    return;
-  }
+      if (!data.success) {
+        showToast.error(data.message || "Login failed");
+        return;
+      }
 
-  if (!data.is_active) {
-    showToast.error("Your account is inactive");
-    return;
-  }
+      if (!data.is_active) {
+        showToast.error("Your account is inactive");
+        return;
+      }
 
-  if (!data.access_token) {
-    showToast.error("Access token not received");
-    return;
-  }
+      if (!data.access_token) {
+        showToast.error("Access token not received");
+        return;
+      }
 
-  setToken(
-    data.access_token,
-    data.refresh_token
-  );
+      setToken(data.access_token, data.refresh_token);
 
-  showToast.success(
-    data.message || "Login successful"
-  );
+      showToast.success(data.message || "Login successful");
 
-  // Direct Dashboard
-  router.replace("/dashboard");
-},
+      // Direct Dashboard
+      router.replace("/dashboard");
+    },
 
     // =================================================
     // ERROR
     // =================================================
 
     onError: (error) => {
-      console.error(
-        "Login mutation error:",
-        error
-      );
+      console.error("Login mutation error:", error);
 
-      const err =
-        error as {
-          response?: {
-            data?: ErrorResponse;
-          };
-
-          message?: string;
+      const err = error as {
+        response?: {
+          data?: ErrorResponse;
         };
+
+        message?: string;
+      };
 
       const errorMessage =
         err.response?.data?.message ||
@@ -94,9 +81,7 @@ export default function useLoginMutation() {
         err.message ||
         "Login error";
 
-      showToast.error(
-        errorMessage
-      );
+      showToast.error(errorMessage);
     },
   });
 }

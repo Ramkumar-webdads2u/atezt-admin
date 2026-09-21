@@ -25,7 +25,7 @@ const removeSafeColorOverride = () => {
 
 export const exportDashboardToPDF = async (
   element: HTMLElement,
-  setLoading?: (v: boolean) => void
+  setLoading?: (v: boolean) => void,
 ) => {
   const elementsToRestore: Array<{
     el: HTMLElement;
@@ -38,7 +38,9 @@ export const exportDashboardToPDF = async (
 
       const hasUnsupported =
         /\b(lab|oklch|lch|oklab|color-mix|hwb)\s*\(/i.test(style.color) ||
-        /\b(lab|oklch|lch|oklab|color-mix|hwb)\s*\(/i.test(style.backgroundColor);
+        /\b(lab|oklch|lch|oklab|color-mix|hwb)\s*\(/i.test(
+          style.backgroundColor,
+        );
 
       if (hasUnsupported) {
         elementsToRestore.push({
@@ -61,7 +63,7 @@ export const exportDashboardToPDF = async (
 
   try {
     setLoading?.(true);
-addSafeColorOverride(); // ✅ ADD THIS
+    addSafeColorOverride(); // ✅ ADD THIS
     cleanUnsupportedColors();
 
     const canvas = await html2canvas(element, {
@@ -69,7 +71,7 @@ addSafeColorOverride(); // ✅ ADD THIS
       useCORS: true,
       backgroundColor: "#ffffff",
     });
-removeSafeColorOverride(); // ✅ ADD THIS
+    removeSafeColorOverride(); // ✅ ADD THIS
     restoreStyles();
 
     const pdf = new jsPDF({
@@ -115,7 +117,7 @@ removeSafeColorOverride(); // ✅ ADD THIS
         0,
         0,
         imgW,
-        pageCanvas.height
+        pageCanvas.height,
       );
 
       if (pageIndex > 0) pdf.addPage();
@@ -130,12 +132,9 @@ removeSafeColorOverride(); // ✅ ADD THIS
       pdf.text("Incident Analytics — Officers Report", 10, 9);
 
       pdf.setFontSize(8);
-      pdf.text(
-        `Exported: ${new Date().toLocaleString()}`,
-        pageW - 10,
-        9,
-        { align: "right" }
-      );
+      pdf.text(`Exported: ${new Date().toLocaleString()}`, pageW - 10, 9, {
+        align: "right",
+      });
 
       const imgData = pageCanvas.toDataURL("image/png");
 
@@ -145,7 +144,7 @@ removeSafeColorOverride(); // ✅ ADD THIS
         marginX,
         marginTop,
         usableW,
-        pageCanvas.height * scale
+        pageCanvas.height * scale,
       );
 
       // Footer
@@ -156,7 +155,7 @@ removeSafeColorOverride(); // ✅ ADD THIS
         "This report is auto-generated and non-editable.",
         pageW / 2,
         pageH - 3,
-        { align: "center" }
+        { align: "center" },
       );
 
       remaining -= pageHeightInCanvas;

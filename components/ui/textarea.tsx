@@ -24,30 +24,27 @@ export const textareaVariants = cva(
         destructive:
           "border-destructive/50 text-destructive focus:outline-hidden focus:border-destructive-700 disabled:bg-destructive/30 disabled:placeholder:text-destructive  placeholder:text-destructive/70",
       },
-
     },
 
     defaultVariants: {
       color: "default",
     },
-  }
+  },
 );
 
 export interface TextareaProps
-  extends React.TextareaHTMLAttributes<HTMLTextAreaElement>,
-  VariantProps<typeof textareaVariants> {
-  color?: InputColor
+  extends
+    React.TextareaHTMLAttributes<HTMLTextAreaElement>,
+    VariantProps<typeof textareaVariants> {
+  color?: InputColor;
 }
 
 const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
-  ({ className, color,  defaultValue, ...props }, ref) => {
+  ({ className, color, defaultValue, ...props }, ref) => {
     return (
       <div className="flex-1 w-full">
         <textarea
-          className={cn(
-            textareaVariants({ color }),
-            className
-          )}
+          className={cn(textareaVariants({ color }), className)}
           ref={ref}
           {...props}
         >
@@ -55,9 +52,8 @@ const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
         </textarea>
       </div>
     );
-  }
+  },
 );
 Textarea.displayName = "Textarea";
 
 export { Textarea };
-

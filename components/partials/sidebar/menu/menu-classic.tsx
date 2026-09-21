@@ -27,7 +27,7 @@ import SidebarHoverToggle from "@/components/partials/sidebar/sidebar-hover-togg
 import { useMenuHoverConfig } from "@/hooks/use-menu-hover";
 import { useMediaQuery } from "@/hooks/use-media-query";
 
-export function MenuClassic({ }) {
+export function MenuClassic({}) {
   // translate
   const t = useTranslations("Menu");
   const pathname = usePathname();
@@ -89,7 +89,7 @@ export function MenuClassic({ }) {
             {menuList?.map(({ groupLabel, menus }, index) => (
               <li className={cn("w-full", groupLabel ? "" : "")} key={index}>
                 {((!collapsed || hovered) && groupLabel) ||
-                  !collapsed === undefined ? (
+                !collapsed === undefined ? (
                   <MenuLabel label={groupLabel} />
                 ) : collapsed &&
                   !hovered &&

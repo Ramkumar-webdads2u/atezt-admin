@@ -57,7 +57,7 @@ interface MultiSelectProps extends VariantProps<typeof multiSelectVariants> {
   placeholder?: string;
   searchable?: boolean;
   searchPlaceholder?: string;
-  maxCount?: number;           // max badges shown before "+N more"
+  maxCount?: number; // max badges shown before "+N more"
   disabled?: boolean;
   className?: string;
   color?: InputColor;

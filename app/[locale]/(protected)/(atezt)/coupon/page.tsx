@@ -5,14 +5,14 @@ import CouponList from "./CouponList";
 function DashbaordPage() {
   return (
     <>
-        <SiteBreadcrumb />
-        <div className="space-y-6">
-          <Card>
-            <CardContent className="p-0">
-              <CouponList />
-            </CardContent>
-          </Card>
-        </div>
+      <SiteBreadcrumb />
+      <div className="space-y-6">
+        <Card>
+          <CardContent className="p-0">
+            <CouponList />
+          </CardContent>
+        </Card>
+      </div>
     </>
   );
 }

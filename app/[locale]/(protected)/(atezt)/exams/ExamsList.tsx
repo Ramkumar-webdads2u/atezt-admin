@@ -1,10 +1,8 @@
-'use client';
-import React from 'react'
+"use client";
+import React from "react";
 
 function ExamsList() {
-  return (
-    <div>ExamsList</div>
-  )
+  return <div>ExamsList</div>;
 }
 
-export default ExamsList
+export default ExamsList;

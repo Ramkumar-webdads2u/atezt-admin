@@ -15,14 +15,14 @@ export const StarRating = ({
   onChange,
   readonly = false,
   size = "md",
-  showValue = false
+  showValue = false,
 }: StarRatingProps) => {
   const [hoveredValue, setHoveredValue] = useState(0);
 
   const sizeClasses = {
     sm: "h-4 w-4",
-    md: "h-5 w-5", 
-    lg: "h-6 w-6"
+    md: "h-5 w-5",
+    lg: "h-6 w-6",
   };
 
   const handleClick = (starValue: number) => {
@@ -33,7 +33,7 @@ export const StarRating = ({
 
   const handleKeyDown = (e: React.KeyboardEvent, starValue: number) => {
     if (readonly) return;
-    
+
     if (e.key === "Enter" || e.key === " ") {
       e.preventDefault();
       handleClick(starValue);
@@ -60,7 +60,7 @@ export const StarRating = ({
             className={cn(
               "focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 rounded-sm transition-colors",
               !readonly && "hover:scale-110",
-              readonly && "cursor-default"
+              readonly && "cursor-default",
             )}
             onClick={() => handleClick(starValue)}
             onMouseEnter={() => !readonly && setHoveredValue(starValue)}
@@ -68,7 +68,7 @@ export const StarRating = ({
             onKeyDown={(e) => handleKeyDown(e, starValue)}
             disabled={readonly}
             tabIndex={readonly ? -1 : 0}
-            aria-label={`${starValue} star${starValue !== 1 ? 's' : ''}`}
+            aria-label={`${starValue} star${starValue !== 1 ? "s" : ""}`}
           >
             <Star
               className={cn(
@@ -76,7 +76,7 @@ export const StarRating = ({
                 "transition-colors",
                 starValue <= displayValue
                   ? "fill-yellow-400 text-yellow-400"
-                  : "fill-muted text-muted-foreground"
+                  : "fill-muted text-muted-foreground",
               )}
             />
           </button>

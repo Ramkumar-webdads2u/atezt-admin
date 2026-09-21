@@ -233,7 +233,7 @@ const MenuItem = ({
           "hover:ring-transparent hover:ring-offset-0",
           active
             ? "!bg-[#dcfce7] !text-[#00a63c] hover:!bg-[#dcfce7]"
-            : "!bg-transparent hover:!bg-transparent"
+            : "!bg-transparent hover:!bg-transparent",
         )}
         asChild
       >
@@ -258,9 +258,7 @@ const MenuItem = ({
             })}
           />
 
-          {!collapsed && (
-            <p className="max-w-[200px] truncate">{label}</p>
-          )}
+          {!collapsed && <p className="max-w-[200px] truncate">{label}</p>}
         </Link>
       </Button>
     );
@@ -280,16 +278,14 @@ const MenuItem = ({
           "hover:ring-transparent hover:ring-offset-0",
           active
             ? "!bg-[#dcfce7] !text-[#00a63c] hover:!bg-[#dcfce7]"
-            : "!bg-transparent hover:!bg-transparent"
+            : "!bg-transparent hover:!bg-transparent",
         )}
         asChild
       >
         <Link href={href}>
           <Icon icon={icon} className="h-6 w-6 mb-1" />
 
-          <p className="max-w-[200px] text-[11px] truncate">
-            {label}
-          </p>
+          <p className="max-w-[200px] text-[11px] truncate">{label}</p>
         </Link>
       </Button>
     );
@@ -318,7 +314,7 @@ const MenuItem = ({
         },
         active
           ? "!bg-[#dcfce7] !text-[#00a63c] hover:!bg-[#dcfce7] !border-l-4 !border-[#00a63c]"
-          : "!bg-transparent hover:!bg-transparent"
+          : "!bg-transparent hover:!bg-transparent",
       )}
       asChild
     >

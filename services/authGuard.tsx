@@ -77,9 +77,7 @@ const AuthGuard = ({ children }: AuthGuardProps) => {
 
     const token = getAccessToken();
 
-    const isLoginPage =
-      pathname === "/" ||
-      pathname === "/auth/login";
+    const isLoginPage = pathname === "/" || pathname === "/auth/login";
 
     // No token → protected route → login
     if (!token && !isLoginPage) {

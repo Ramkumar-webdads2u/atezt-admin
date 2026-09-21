@@ -1,10 +1,8 @@
-'use client';
-import React from 'react'
+"use client";
+import React from "react";
 
 function CouponList() {
-  return (
-    <div>CouponList</div>
-  )
+  return <div>CouponList</div>;
 }
 
-export default CouponList
+export default CouponList;

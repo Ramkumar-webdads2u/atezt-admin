@@ -79,7 +79,7 @@
 
 // export default Login;
 
-import { Link } from '@/i18n/routing';
+import { Link } from "@/i18n/routing";
 import LoginForm from "@/components/partials/auth/login-form";
 import Image from "next/image";
 import Social from "@/components/partials/auth/social";
@@ -154,4 +154,3 @@ const Login = ({ params: { locale } }: { params: { locale: string } }) => {
 };
 
 export default Login;
-

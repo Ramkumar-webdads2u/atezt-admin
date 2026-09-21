@@ -1,10 +1,8 @@
-'use client';
-import React from 'react'
+"use client";
+import React from "react";
 
 function QuestionTypeList() {
-  return (
-    <div>QuestionTypeList</div>
-  )
+  return <div>QuestionTypeList</div>;
 }
 
-export default QuestionTypeList
+export default QuestionTypeList;

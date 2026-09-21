@@ -2,8 +2,18 @@ import { useState } from "react";
 
 const DAYS = ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"];
 const MONTHS = [
-  "January", "February", "March", "April", "May", "June",
-  "July", "August", "September", "October", "November", "December",
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
 ];
 
 function getDaysInMonth(year: number, month: number) {
@@ -53,13 +63,17 @@ export default function DatePicker({
   };
 
   const prevMonth = () => {
-    if (viewMonth === 0) { setViewMonth(11); setViewYear(y => y - 1); }
-    else setViewMonth(m => m - 1);
+    if (viewMonth === 0) {
+      setViewMonth(11);
+      setViewYear((y) => y - 1);
+    } else setViewMonth((m) => m - 1);
   };
 
   const nextMonth = () => {
-    if (viewMonth === 11) { setViewMonth(0); setViewYear(y => y + 1); }
-    else setViewMonth(m => m + 1);
+    if (viewMonth === 11) {
+      setViewMonth(0);
+      setViewYear((y) => y + 1);
+    } else setViewMonth((m) => m + 1);
   };
 
   const isSelected = (day: number) =>
@@ -73,12 +87,18 @@ export default function DatePicker({
     today.getMonth() === viewMonth &&
     today.getDate() === day;
 
-  const cells = Array(firstDay).fill(null).concat(
-    Array.from({ length: daysInMonth }, (_, i) => i + 1)
-  );
+  const cells = Array(firstDay)
+    .fill(null)
+    .concat(Array.from({ length: daysInMonth }, (_, i) => i + 1));
 
   return (
-    <div style={{ position: "relative", fontFamily: "'DM Sans', sans-serif", width: "100%" }}>
+    <div
+      style={{
+        position: "relative",
+        fontFamily: "'DM Sans', sans-serif",
+        width: "100%",
+      }}
+    >
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&display=swap');
 
@@ -265,14 +285,23 @@ export default function DatePicker({
       <div style={{ position: "relative" }}>
         <button
           className={`dp-input ${open ? "open" : ""} ${!selected ? "placeholder" : ""}`}
-          onClick={() => setOpen(o => !o)}
+          onClick={() => setOpen((o) => !o)}
         >
           {selected ? formatDate(selected) : placeholder}
         </button>
 
         {/* Calendar icon */}
         <span className="dp-icon">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <svg
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
             <rect x="3" y="4" width="18" height="18" rx="2" />
             <line x1="16" y1="2" x2="16" y2="6" />
             <line x1="8" y1="2" x2="8" y2="6" />
@@ -285,13 +314,33 @@ export default function DatePicker({
             {/* Header */}
             <div className="dp-header">
               <button className="dp-nav" onClick={prevMonth}>
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <svg
+                  width="12"
+                  height="12"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
                   <polyline points="15 18 9 12 15 6" />
                 </svg>
               </button>
-              <span className="dp-month-label">{MONTHS[viewMonth]} {viewYear}</span>
+              <span className="dp-month-label">
+                {MONTHS[viewMonth]} {viewYear}
+              </span>
               <button className="dp-nav" onClick={nextMonth}>
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <svg
+                  width="12"
+                  height="12"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
                   <polyline points="9 18 15 12 9 6" />
                 </svg>
               </button>
@@ -299,8 +348,10 @@ export default function DatePicker({
 
             {/* Day names */}
             <div className="dp-grid">
-              {DAYS.map(d => (
-                <div key={d} className="dp-day-name">{d}</div>
+              {DAYS.map((d) => (
+                <div key={d} className="dp-day-name">
+                  {d}
+                </div>
               ))}
 
               {/* Day cells */}
@@ -317,7 +368,10 @@ export default function DatePicker({
 
             {/* Footer */}
             <div className="dp-footer">
-              <button className="dp-btn dp-btn-cancel" onClick={() => setOpen(false)}>
+              <button
+                className="dp-btn dp-btn-cancel"
+                onClick={() => setOpen(false)}
+              >
                 Cancel
               </button>
               <button

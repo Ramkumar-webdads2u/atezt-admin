@@ -1,4 +1,4 @@
-import { Link } from '@/i18n/routing';
+import { Link } from "@/i18n/routing";
 import ForgotPass from "@/components/partials/auth/forgot-pass";
 import Image from "next/image";
 import Copyright from "@/components/partials/auth/copyright";
@@ -47,7 +47,8 @@ const ForgotPass2 = () => {
           className="lg:block hidden flex-1 overflow-hidden text-[40px] leading-[48px] text-default-600 bg-cover bg-no-repeat bg-center"
           style={{
             backgroundImage: `url(/images/all-img/login-bg.png)`,
-          }}>
+          }}
+        >
           <div className="flex flex-col h-full justify-center">
             <div className="flex-1 flex flex-col justify-center items-center">
               <Link href="/">

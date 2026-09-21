@@ -36,15 +36,9 @@ interface ExamCategoryModalProps {
 ===================================================== */
 
 const schema = z.object({
-  exam: z
-    .string()
-    .trim()
-    .min(1, "Exam name is required"),
+  exam: z.string().trim().min(1, "Exam name is required"),
 
-  description: z
-    .string()
-    .trim()
-    .min(1, "Description is required"),
+  description: z.string().trim().min(1, "Description is required"),
 
   is_active: z.boolean(),
 
@@ -79,25 +73,17 @@ interface ApiResponse {
    COMPONENT
 ===================================================== */
 
-const ExamCategoryModal: React.FC<
-  ExamCategoryModalProps
-> = ({
+const ExamCategoryModal: React.FC<ExamCategoryModalProps> = ({
   mode,
   category,
   onClose,
 }) => {
-  const queryClient =
-    useQueryClient();
+  const queryClient = useQueryClient();
 
   /*
    * POST / PUT
    */
-  const mutation =
-    useApiMutation(
-      mode === "add"
-        ? "post"
-        : "put"
-    );
+  const mutation = useApiMutation(mode === "add" ? "post" : "put");
 
   /* =====================================================
      FORM
@@ -106,49 +92,35 @@ const ExamCategoryModal: React.FC<
   const {
     register,
     handleSubmit,
-    formState: {
-      errors,
-    },
+    formState: { errors },
     setValue,
     watch,
-  } = useForm<
-    FormInput,
-    any,
-    FormValues
-  >({
-    resolver:
-      zodResolver(schema),
+  } = useForm<FormInput, any, FormValues>({
+    resolver: zodResolver(schema),
 
     defaultValues: {
-      exam:
-        category?.exam || "",
+      exam: category?.exam || "",
 
-      description:
-        category?.description || "",
+      description: category?.description || "",
 
-      is_active:
-        category?.is_active ?? true,
+      is_active: category?.is_active ?? true,
     },
   });
 
-  const isActive =
-    watch("is_active");
+  const isActive = watch("is_active");
 
   /*
    * React Query mutation loading state
    *
    * DO NOT use useTransition here.
    */
-  const isPending =
-    mutation.isPending;
+  const isPending = mutation.isPending;
 
   /* =====================================================
      SUBMIT
   ===================================================== */
 
-  const onSubmit = async (
-    data: FormValues
-  ) => {
+  const onSubmit = async (data: FormValues) => {
     try {
       /* ---------------------------------------------
          PAYLOAD
@@ -157,11 +129,9 @@ const ExamCategoryModal: React.FC<
       const payload = {
         exam: data.exam.trim(),
 
-        description:
-          data.description.trim(),
+        description: data.description.trim(),
 
-        is_active:
-          data.is_active,
+        is_active: data.is_active,
 
         /*
          * Temporarily disabled
@@ -183,68 +153,43 @@ const ExamCategoryModal: React.FC<
           ? APICONSTANT.CreateExamCategory
           : APICONSTANT.UpdateExamCategory.replace(
               "{category_id}",
-              String(category?.id)
+              String(category?.id),
             );
 
-      console.log(
-        "================================"
-      );
+      console.log("================================");
 
       console.log(
-        mode === "add"
-          ? "🚀 CREATE EXAM CATEGORY"
-          : "🚀 UPDATE EXAM CATEGORY"
+        mode === "add" ? "🚀 CREATE EXAM CATEGORY" : "🚀 UPDATE EXAM CATEGORY",
       );
 
-      console.log(
-        "METHOD:",
-        mode === "add"
-          ? "POST"
-          : "PUT"
-      );
+      console.log("METHOD:", mode === "add" ? "POST" : "PUT");
 
-      console.log(
-        "API:",
-        apiUrl
-      );
+      console.log("API:", apiUrl);
 
-      console.log(
-        "PAYLOAD:",
-        payload
-      );
+      console.log("PAYLOAD:", payload);
 
-      console.log(
-        "================================"
-      );
+      console.log("================================");
 
       /* ---------------------------------------------
          API REQUEST
       --------------------------------------------- */
 
-      const response =
-        (await mutation.mutateAsync({
-          url: {
-            apiUrl,
-          },
+      const response = (await mutation.mutateAsync({
+        url: {
+          apiUrl,
+        },
 
-          body: payload,
-        })) as ApiResponse;
+        body: payload,
+      })) as ApiResponse;
 
-      console.log(
-        "✅ API RESPONSE:",
-        response
-      );
+      console.log("✅ API RESPONSE:", response);
 
       /* ---------------------------------------------
          SUCCESS
       --------------------------------------------- */
 
-      if (
-        response?.success === true
-      ) {
-        console.log(
-          "✅ Mutation successful"
-        );
+      if (response?.success === true) {
+        console.log("✅ Mutation successful");
 
         /*
          * Refresh Exam Categories
@@ -272,12 +217,12 @@ const ExamCategoryModal: React.FC<
          * Close modal
          */
         if (response?.success === true) {
-  await queryClient.invalidateQueries({
-    queryKey: ["GetExamCategories"],
-  });
+          await queryClient.invalidateQueries({
+            queryKey: ["GetExamCategories"],
+          });
 
-  onClose();
-}
+          onClose();
+        }
 
         return;
       }
@@ -286,20 +231,11 @@ const ExamCategoryModal: React.FC<
          API RETURNED FAILURE
       --------------------------------------------- */
 
-      console.error(
-        "❌ API returned unsuccessful response:",
-        response
-      );
+      console.error("❌ API returned unsuccessful response:", response);
 
-      alert(
-        response?.message ||
-          "Failed to save exam category."
-      );
+      alert(response?.message || "Failed to save exam category.");
     } catch (error) {
-      console.error(
-        "❌ EXAM CATEGORY MUTATION ERROR:",
-        error
-      );
+      console.error("❌ EXAM CATEGORY MUTATION ERROR:", error);
     }
   };
 
@@ -309,13 +245,9 @@ const ExamCategoryModal: React.FC<
 
   return (
     <DialogContent size="sm">
-
       <DialogHeader>
-
         <DialogTitle>
-          {mode === "add"
-            ? "Add Exam Category"
-            : "Edit Exam Category"}
+          {mode === "add" ? "Add Exam Category" : "Edit Exam Category"}
         </DialogTitle>
 
         <DialogDescription>
@@ -323,25 +255,15 @@ const ExamCategoryModal: React.FC<
             ? "Fill in the details to create a new exam category."
             : "Update the exam category details below."}
         </DialogDescription>
-
       </DialogHeader>
 
-      <form
-        onSubmit={handleSubmit(
-          onSubmit
-        )}
-        className="space-y-5"
-      >
-
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
         {/* =========================================
             EXAM
         ========================================= */}
 
         <div className="space-y-2">
-
-          <Label htmlFor="exam">
-            Exam
-          </Label>
+          <Label htmlFor="exam">Exam</Label>
 
           <Input
             id="exam"
@@ -351,11 +273,8 @@ const ExamCategoryModal: React.FC<
           />
 
           {errors.exam && (
-            <p className="text-xs text-red-500">
-              {errors.exam.message}
-            </p>
+            <p className="text-xs text-red-500">{errors.exam.message}</p>
           )}
-
         </div>
 
         {/* =========================================
@@ -363,16 +282,11 @@ const ExamCategoryModal: React.FC<
         ========================================= */}
 
         <div className="space-y-2">
-
-          <Label htmlFor="description">
-            Description
-          </Label>
+          <Label htmlFor="description">Description</Label>
 
           <textarea
             id="description"
-            {...register(
-              "description"
-            )}
+            {...register("description")}
             placeholder="Enter exam description"
             rows={4}
             disabled={isPending}
@@ -380,14 +294,8 @@ const ExamCategoryModal: React.FC<
           />
 
           {errors.description && (
-            <p className="text-xs text-red-500">
-              {
-                errors.description
-                  .message
-              }
-            </p>
+            <p className="text-xs text-red-500">{errors.description.message}</p>
           )}
-
         </div>
 
         {/* =========================================
@@ -449,51 +357,34 @@ const ExamCategoryModal: React.FC<
         ========================================= */}
 
         <div className="flex items-center justify-between rounded-lg border p-4">
-
           <div>
-
-            <Label>
-              Active Status
-            </Label>
+            <Label>Active Status</Label>
 
             <p className="mt-1 text-xs text-muted-foreground">
-              Enable or disable this
-              exam category.
+              Enable or disable this exam category.
             </p>
-
           </div>
 
           <button
             type="button"
             disabled={isPending}
             onClick={() =>
-              setValue(
-                "is_active",
-                !isActive,
-                {
-                  shouldDirty: true,
-                  shouldValidate: true,
-                }
-              )
+              setValue("is_active", !isActive, {
+                shouldDirty: true,
+                shouldValidate: true,
+              })
             }
             className={`relative h-6 w-11 rounded-full transition-colors disabled:cursor-not-allowed disabled:opacity-50 ${
-              isActive
-                ? "bg-green-500"
-                : "bg-gray-300"
+              isActive ? "bg-green-500" : "bg-gray-300"
             }`}
             aria-label="Toggle active status"
           >
-
             <span
               className={`absolute top-1 h-4 w-4 rounded-full bg-white transition-transform ${
-                isActive
-                  ? "left-6"
-                  : "left-1"
+                isActive ? "left-6" : "left-1"
               }`}
             />
-
           </button>
-
         </div>
 
         {/* =========================================
@@ -501,7 +392,6 @@ const ExamCategoryModal: React.FC<
         ========================================= */}
 
         <DialogFooter>
-
           <Button
             type="button"
             variant="outline"
@@ -511,14 +401,8 @@ const ExamCategoryModal: React.FC<
             Cancel
           </Button>
 
-          <Button
-            type="submit"
-            disabled={isPending}
-          >
-
-            {isPending && (
-              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-            )}
+          <Button type="submit" disabled={isPending}>
+            {isPending && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
 
             {isPending
               ? mode === "add"
@@ -527,13 +411,9 @@ const ExamCategoryModal: React.FC<
               : mode === "add"
                 ? "Create"
                 : "Update"}
-
           </Button>
-
         </DialogFooter>
-
       </form>
-
     </DialogContent>
   );
 };

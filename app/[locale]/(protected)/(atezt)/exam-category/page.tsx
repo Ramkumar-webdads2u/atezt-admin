@@ -5,14 +5,14 @@ import ExamCategoryList from "./ExamCategoryList";
 function DashbaordPage() {
   return (
     <>
-        <SiteBreadcrumb />
-        <div className="space-y-6">
-          <Card>
-            <CardContent className="p-0">
-              <ExamCategoryList />
-            </CardContent>
-          </Card>
-        </div>
+      <SiteBreadcrumb />
+      <div className="space-y-6">
+        <Card>
+          <CardContent className="p-0">
+            <ExamCategoryList />
+          </CardContent>
+        </Card>
+      </div>
     </>
   );
 }

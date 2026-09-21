@@ -36,23 +36,14 @@ export default async function RootLayout({
   const direction = getLangDir(locale);
 
   return (
-    <html
-      lang={locale}
-      dir={direction}
-      suppressHydrationWarning
-    >
+    <html lang={locale} dir={direction} suppressHydrationWarning>
       <body className={`${inter.className} nextcode-app`}>
-        <NextIntlClientProvider
-          messages={messages}
-          locale={locale}
-        >
+        <NextIntlClientProvider messages={messages} locale={locale}>
           <QueryProvider>
             <AuthGuard>
               <ThemeProvider>
                 <DirectionProvider direction={direction}>
-                  <MountedProvider>
-                    {children}
-                  </MountedProvider>
+                  <MountedProvider>{children}</MountedProvider>
                 </DirectionProvider>
 
                 <SonnerToaster />

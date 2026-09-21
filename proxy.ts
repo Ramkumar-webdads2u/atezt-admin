@@ -21,11 +21,9 @@ export default function proxy(request: NextRequest) {
         : pathname;
 
   const isLoginPage =
-    pathnameWithoutLocale === "/" ||
-    pathnameWithoutLocale === "/auth/login";
+    pathnameWithoutLocale === "/" || pathnameWithoutLocale === "/auth/login";
 
-  const isNetworkError =
-    pathnameWithoutLocale.startsWith("/network-error");
+  const isNetworkError = pathnameWithoutLocale.startsWith("/network-error");
 
   // Server-side protection: an authenticated user cannot go back
   // to the login page.

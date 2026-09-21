@@ -19,9 +19,7 @@ interface DeleteConfirmModalProps {
   open: boolean;
   onClose: () => void;
 
-  onConfirm: () =>
-    | void
-    | Promise<void>;
+  onConfirm: () => void | Promise<void>;
 
   loading?: boolean;
 
@@ -32,9 +30,7 @@ interface DeleteConfirmModalProps {
   cancelText?: string;
 }
 
-const DeleteConfirmModal: React.FC<
-  DeleteConfirmModalProps
-> = ({
+const DeleteConfirmModal: React.FC<DeleteConfirmModalProps> = ({
   open,
   onClose,
   onConfirm,
@@ -42,8 +38,7 @@ const DeleteConfirmModal: React.FC<
 
   title = "Delete Confirmation",
 
-  description =
-    "Are you sure you want to delete this item? This action cannot be undone.",
+  description = "Are you sure you want to delete this item? This action cannot be undone.",
 
   confirmText = "Delete",
   cancelText = "Cancel",
@@ -58,19 +53,13 @@ const DeleteConfirmModal: React.FC<
       }}
     >
       <DialogContent size="sm">
-
         <DialogHeader>
-          <DialogTitle>
-            {title}
-          </DialogTitle>
+          <DialogTitle>{title}</DialogTitle>
 
-          <DialogDescription>
-            {description}
-          </DialogDescription>
+          <DialogDescription>{description}</DialogDescription>
         </DialogHeader>
 
         <DialogFooter>
-
           <DialogClose asChild>
             <Button
               type="button"
@@ -82,24 +71,12 @@ const DeleteConfirmModal: React.FC<
             </Button>
           </DialogClose>
 
-          <Button
-            type="button"
-            disabled={loading}
-            onClick={onConfirm}
-          >
-            {loading && (
-              <Loader2
-                className="mr-2 h-4 w-4 animate-spin"
-              />
-            )}
+          <Button type="button" disabled={loading} onClick={onConfirm}>
+            {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
 
-            {loading
-              ? "Deleting..."
-              : confirmText}
+            {loading ? "Deleting..." : confirmText}
           </Button>
-
         </DialogFooter>
-
       </DialogContent>
     </Dialog>
   );

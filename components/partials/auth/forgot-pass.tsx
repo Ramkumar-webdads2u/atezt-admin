@@ -10,14 +10,14 @@ type Inputs = {
 };
 import { useForm, SubmitHandler } from "react-hook-form";
 const ForgotPass = () => {
- const {
-   register,
-   handleSubmit,
-   watch,
-   formState: { errors },
- } = useForm<Inputs>();
- const onSubmit: SubmitHandler<Inputs> = (data) => console.log(data);
- console.log(watch("example"));
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm<Inputs>();
+  const onSubmit: SubmitHandler<Inputs> = (data) => console.log(data);
+  console.log(watch("example"));
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 ">

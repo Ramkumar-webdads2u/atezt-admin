@@ -1,9 +1,6 @@
 import axios from "axios";
 import { APIURLS } from "./apiconfig";
-import {
-  getAccessToken,
-  clearAuthCookies,
-} from "./authCookie";
+import { getAccessToken, clearAuthCookies } from "./authCookie";
 
 const axiosInstance = axios.create({
   baseURL: APIURLS.baseUrl,
@@ -17,8 +14,7 @@ axiosInstance.interceptors.request.use(
     const token = getAccessToken();
 
     if (token) {
-      config.headers.Authorization =
-        `Bearer ${token}`;
+      config.headers.Authorization = `Bearer ${token}`;
     }
 
     // console.log(
@@ -38,7 +34,7 @@ axiosInstance.interceptors.request.use(
   },
   (error) => {
     return Promise.reject(error);
-  }
+  },
 );
 
 axiosInstance.interceptors.response.use(
@@ -63,16 +59,14 @@ axiosInstance.interceptors.response.use(
     //   error.message
     // );
 
-    if (
-      error.response?.status === 401
-    ) {
+    if (error.response?.status === 401) {
       clearAuthCookies();
 
       window.location.href = "/";
     }
 
     return Promise.reject(error);
-  }
+  },
 );
 
 export default axiosInstance;

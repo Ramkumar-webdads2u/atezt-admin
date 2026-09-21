@@ -1,10 +1,8 @@
-'use client';
-import React from 'react'
+"use client";
+import React from "react";
 
 function UsersList() {
-  return (
-    <div>UsersList</div>
-  )
+  return <div>UsersList</div>;
 }
 
-export default UsersList
+export default UsersList;

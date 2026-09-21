@@ -30,7 +30,9 @@ export const playAlertSound = () => {
 
 export const startAlertSound = (): (() => void) => {
   try {
-    const ctx = new (window.AudioContext || (window as any).webkitAudioContext)();
+    const ctx = new (
+      window.AudioContext || (window as any).webkitAudioContext
+    )();
     let stopped = false;
 
     const playBeep = () => {
@@ -49,7 +51,7 @@ export const startAlertSound = (): (() => void) => {
         gain.gain.setValueAtTime(0.35, ctx.currentTime + start);
         gain.gain.exponentialRampToValueAtTime(
           0.001,
-          ctx.currentTime + start + duration
+          ctx.currentTime + start + duration,
         );
         osc.start(ctx.currentTime + start);
         osc.stop(ctx.currentTime + start + duration);

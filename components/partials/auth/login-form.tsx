@@ -22,17 +22,13 @@ import useLoginMutation from "@/hooks/Mutations/useLoginMutation";
 // ===============================
 
 const schema = z.object({
-  email: z
-    .string()
-    .email({
-      message: "Your email is invalid.",
-    }),
+  email: z.string().email({
+    message: "Your email is invalid.",
+  }),
 
-  password: z
-    .string()
-    .min(4, {
-      message: "Password must be at least 4 characters.",
-    }),
+  password: z.string().min(4, {
+    message: "Password must be at least 4 characters.",
+  }),
 });
 
 type LoginFormValues = z.infer<typeof schema>;
@@ -42,23 +38,16 @@ type LoginFormValues = z.infer<typeof schema>;
 // ===============================
 
 const LoginForm = () => {
-  const [isPending, startTransition] =
-    React.useTransition();
+  const [isPending, startTransition] = React.useTransition();
 
-  const [passwordType, setPasswordType] =
-    React.useState<"password" | "text">(
-      "password"
-    );
+  const [passwordType, setPasswordType] = React.useState<"password" | "text">(
+    "password",
+  );
 
-  const [selectedOrgId] =
-    React.useState<string>("");
+  const [selectedOrgId] = React.useState<string>("");
 
   const togglePasswordType = () => {
-    setPasswordType((prev) =>
-      prev === "password"
-        ? "text"
-        : "password"
-    );
+    setPasswordType((prev) => (prev === "password" ? "text" : "password"));
   };
 
   // ===============================
@@ -75,8 +64,7 @@ const LoginForm = () => {
     mode: "all",
 
     defaultValues: {
-      email:
-        "guna@gmail.com",
+      email: "guna@gmail.com",
 
       password: "Guna@123",
     },
@@ -86,54 +74,40 @@ const LoginForm = () => {
   // LOGIN MUTATION
   // ===============================
 
-  const loginMutation =
-    useLoginMutation();
+  const loginMutation = useLoginMutation();
 
   // ===============================
   // SUBMIT
   // ===============================
 
-  const onSubmit = async (
-  data: z.infer<typeof schema>
-) => {
-  startTransition(async () => {
-    try {
-      await loginMutation.mutateAsync({
-        url: {
-          apiUrl: APICONSTANT.Login,
-        },
+  const onSubmit = async (data: z.infer<typeof schema>) => {
+    startTransition(async () => {
+      try {
+        await loginMutation.mutateAsync({
+          url: {
+            apiUrl: APICONSTANT.Login,
+          },
 
-        body: data,
-      });
-    } catch (error) {
-      console.error(
-        "Login failed",
-        error
-      );
-    }
-  });
-};
+          body: data,
+        });
+      } catch (error) {
+        console.error("Login failed", error);
+      }
+    });
+  };
 
-  const loading =
-    isPending ||
-    loginMutation.isPending;
+  const loading = isPending || loginMutation.isPending;
 
   // ===============================
   // UI
   // ===============================
 
   return (
-    <form
-      onSubmit={handleSubmit(onSubmit)}
-      className="mt-5 2xl:mt-7 space-y-4"
-    >
+    <form onSubmit={handleSubmit(onSubmit)} className="mt-5 2xl:mt-7 space-y-4">
       {/* EMAIL */}
 
       <div className="space-y-2">
-        <Label
-          htmlFor="email"
-          className="font-medium text-default-600"
-        >
+        <Label htmlFor="email" className="font-medium text-default-600">
           Email
         </Label>
 
@@ -144,8 +118,7 @@ const LoginForm = () => {
           type="email"
           id="email"
           className={cn({
-            "border-destructive":
-              errors.email,
+            "border-destructive": errors.email,
           })}
         />
 
@@ -159,10 +132,7 @@ const LoginForm = () => {
       {/* PASSWORD */}
 
       <div className="mt-3.5 space-y-2">
-        <Label
-          htmlFor="password"
-          className="mb-2 font-medium text-default-600"
-        >
+        <Label htmlFor="password" className="mb-2 font-medium text-default-600">
           Password
         </Label>
 
@@ -174,8 +144,7 @@ const LoginForm = () => {
             type={passwordType}
             id="password"
             className={cn("peer", {
-              "border-destructive":
-                errors.password,
+              "border-destructive": errors.password,
             })}
             placeholder=" "
           />
@@ -183,21 +152,13 @@ const LoginForm = () => {
           <button
             type="button"
             aria-label={
-              passwordType === "password"
-                ? "Show password"
-                : "Hide password"
+              passwordType === "password" ? "Show password" : "Hide password"
             }
             className="absolute top-1/2 -translate-y-1/2 ltr:right-4 rtl:left-4 cursor-pointer"
-            onClick={
-              togglePasswordType
-            }
+            onClick={togglePasswordType}
           >
-            {passwordType ===
-            "password" ? (
-              <Icon
-                icon="heroicons:eye"
-                className="w-5 h-5 text-default-400"
-              />
+            {passwordType === "password" ? (
+              <Icon icon="heroicons:eye" className="w-5 h-5 text-default-400" />
             ) : (
               <Icon
                 icon="heroicons:eye-slash"
@@ -216,18 +177,10 @@ const LoginForm = () => {
 
       {/* SUBMIT */}
 
-      <Button
-        type="submit"
-        fullWidth
-        disabled={loading}
-      >
-        {loading && (
-          <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-        )}
+      <Button type="submit" fullWidth disabled={loading}>
+        {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
 
-        {loading
-          ? "Loading..."
-          : "Sign In"}
+        {loading ? "Loading..." : "Sign In"}
       </Button>
     </form>
   );

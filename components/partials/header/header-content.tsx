@@ -25,7 +25,7 @@ const HeaderContent = ({ children }: { children: React.ReactNode }) => {
                 config.skin === "bordered" && config.layout === "semi-box",
               "shadow-base": config.skin === "default",
               "rounded-md": config.navbar === "floating",
-            }
+            },
           )}
         >
           {children}
@@ -60,7 +60,7 @@ const HeaderContent = ({ children }: { children: React.ReactNode }) => {
             "xl:ms-28":
               config.sidebar === "compact" && config.layout !== "horizontal",
             "rounded-md": config.navbar === "floating",
-          }
+          },
         )}
       >
         {children}

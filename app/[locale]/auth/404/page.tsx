@@ -2,7 +2,7 @@ import Logo from "@/components/partials/auth/logo";
 import { Button } from "@/components/ui/button";
 import { Icon } from "@/components/ui/icon";
 import Image from "next/image";
-import { Link } from '@/i18n/routing';
+import { Link } from "@/i18n/routing";
 
 const Page404 = () => {
   return (
@@ -23,7 +23,12 @@ const Page404 = () => {
       </div>
       <div className="container">
         <div className="flex justify-center flex-wrap items-center min-h-screen flex-col text-center">
-          <Image height={500} width={500} src="/images/all-img/404-2.svg" alt="" />
+          <Image
+            height={500}
+            width={500}
+            src="/images/all-img/404-2.svg"
+            alt=""
+          />
           <h4 className="text-3xl font-medium text-default-900  mb-2">
             We are under maintenance.
           </h4>

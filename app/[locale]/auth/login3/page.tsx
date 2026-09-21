@@ -1,4 +1,4 @@
-import { Link } from '@/i18n/routing';
+import { Link } from "@/i18n/routing";
 import Social from "@/components/partials/auth/social";
 import LoginForm from "@/components/partials/auth//login-form";
 import Image from "next/image";
@@ -14,8 +14,7 @@ const Login3 = () => {
         }}
       >
         <div className="overflow-y-auto flex flex-wrap w-full h-dvh">
-          <div
-            className="lg:block hidden flex-1 overflow-hidden text-[40px] leading-[48px] text-default-600 lg:w-1/2">
+          <div className="lg:block hidden flex-1 overflow-hidden text-[40px] leading-[48px] text-default-600 lg:w-1/2">
             <div className="flex justify-center items-center min-h-screen">
               <Link href="/" className="">
                 <Image

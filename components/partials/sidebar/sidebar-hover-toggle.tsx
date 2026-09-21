@@ -22,7 +22,7 @@ const SidebarHoverToggle = () => {
         {
           [`ring-0 ring-default-900 ring-offset-4 ring-offset-secondary ring-inset bg-default-900 dark:bg-${config.sidebarColor}`]:
             !config.collapsed,
-        }
+        },
       )}
     ></div>
   ) : null;

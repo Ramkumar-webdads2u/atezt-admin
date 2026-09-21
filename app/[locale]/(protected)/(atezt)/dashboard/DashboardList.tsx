@@ -1,10 +1,8 @@
-'use client';
-import React from 'react'
+"use client";
+import React from "react";
 
 function DashboardList() {
-  return (
-    <div>DashboardList</div>
-  )
+  return <div>DashboardList</div>;
 }
 
-export default DashboardList
+export default DashboardList;

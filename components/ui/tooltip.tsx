@@ -1,9 +1,9 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import * as TooltipPrimitive from "@radix-ui/react-tooltip"
+import * as React from "react";
+import * as TooltipPrimitive from "@radix-ui/react-tooltip";
 
-import { cn } from "@/lib/utils"
+import { cn } from "@/lib/utils";
 import { cva, type VariantProps } from "class-variance-authority";
 import { color } from "@/lib/type";
 
@@ -24,22 +24,25 @@ const tooltipVariants = cva(
     defaultVariants: {
       color: "default",
     },
-  }
+  },
 );
 
-interface ToolTipProps extends React.ComponentPropsWithoutRef<typeof TooltipPrimitive.Content>, VariantProps<typeof tooltipVariants> {
-  color?: color
+interface ToolTipProps
+  extends
+    React.ComponentPropsWithoutRef<typeof TooltipPrimitive.Content>,
+    VariantProps<typeof tooltipVariants> {
+  color?: color;
 }
-const Tooltip = TooltipPrimitive.Root
-const TooltipTrigger = TooltipPrimitive.Trigger
-const TooltipArrow = TooltipPrimitive.Arrow
+const Tooltip = TooltipPrimitive.Root;
+const TooltipTrigger = TooltipPrimitive.Trigger;
+const TooltipArrow = TooltipPrimitive.Arrow;
 
 const TooltipProvider = ({
   delayDuration = 0,
   ...props
 }: React.ComponentPropsWithoutRef<typeof TooltipPrimitive.Provider>) => (
   <TooltipPrimitive.Provider delayDuration={delayDuration} {...props} />
-)
+);
 
 const TooltipContent = React.forwardRef<
   React.ElementRef<typeof TooltipPrimitive.Content>,
@@ -53,12 +56,14 @@ const TooltipContent = React.forwardRef<
   >
     {children}
   </TooltipPrimitive.Content>
-))
+));
 
-TooltipContent.displayName = TooltipPrimitive.Content.displayName
+TooltipContent.displayName = TooltipPrimitive.Content.displayName;
 
-export { Tooltip, TooltipTrigger, TooltipContent, TooltipProvider, TooltipArrow }
-
-
-
-
+export {
+  Tooltip,
+  TooltipTrigger,
+  TooltipContent,
+  TooltipProvider,
+  TooltipArrow,
+};

@@ -1,28 +1,26 @@
-
-'use client'
+"use client";
 import React from "react";
 import { Loader2 } from "lucide-react";
 // import NextCodeLogo from "./nextcode-logo";
 import { useMounted } from "@/hooks/use-mounted";
 import ShortLogo from "./partials/auth/shortLogo";
 const Loader = () => {
-    const mounted = useMounted()
-    return (
-        mounted ? null : <div className=" h-screen flex items-center justify-center flex-col space-y-2">
-            <div className="flex gap-2 items-center ">
-                {/* <NextCodeLogo className="text-default-900 h-8 w-8 [&>path:nth-child(3)]:text-background [&>path:nth-child(2)]:text-background" /> */}
-                <ShortLogo />
-                {/* <h1 className="text-xl font-semibold bg-gradient-to-r from-[#49C5FD] to-[#993DEC] text-transparent bg-clip-text ">
+  const mounted = useMounted();
+  return mounted ? null : (
+    <div className=" h-screen flex items-center justify-center flex-col space-y-2">
+      <div className="flex gap-2 items-center ">
+        {/* <NextCodeLogo className="text-default-900 h-8 w-8 [&>path:nth-child(3)]:text-background [&>path:nth-child(2)]:text-background" /> */}
+        <ShortLogo />
+        {/* <h1 className="text-xl font-semibold bg-gradient-to-r from-[#49C5FD] to-[#993DEC] text-transparent bg-clip-text ">
                     ATEZT
                 </h1> */}
-            </div>
-            <span className=" inline-flex gap-1  items-center">
-                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                Loading...
-            </span>
-        </div>
-    );
+      </div>
+      <span className=" inline-flex gap-1  items-center">
+        <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+        Loading...
+      </span>
+    </div>
+  );
 };
 
 export default Loader;
-

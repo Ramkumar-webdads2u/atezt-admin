@@ -40,7 +40,7 @@ const SidebarContent = ({ children }: { children: React.ReactNode }) => {
           "m-10 bottom-0 top-0  start-0   ": config.layout === "compact",
           "w-28": config.sidebar === "compact",
           "w-[248px]": hoverConfig.hovered,
-        }
+        },
       )}
     >
       <div className=" relative  flex flex-col h-full  ">

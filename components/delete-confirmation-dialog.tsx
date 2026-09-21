@@ -12,7 +12,12 @@ import {
 import { toast } from "react-hot-toast";
 import { Loader2 } from "lucide-react";
 
-const DeleteConfirmationDialog = ({ open, onClose, onConfirm, defaultToast = true, toastMessage = "Successfully deleted",
+const DeleteConfirmationDialog = ({
+  open,
+  onClose,
+  onConfirm,
+  defaultToast = true,
+  toastMessage = "Successfully deleted",
 }: {
   open: boolean;
   onClose: () => void;

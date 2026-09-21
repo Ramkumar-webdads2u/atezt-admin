@@ -10,7 +10,7 @@
 //       <div className="flex w-full items-center overflow-hidden min-h-dvh h-dvh basis-full">
 //         <div className="overflow-y-auto flex flex-wrap w-full h-dvh">
 //           <div
-//             className="lg:block hidden flex-1 overflow-hidden text-[40px] leading-[48px] text-default-600 
+//             className="lg:block hidden flex-1 overflow-hidden text-[40px] leading-[48px] text-default-600
 //  relative z-1 bg-default-50"
 //           >
 //             <div className="max-w-[520px] pt-20 ps-20 ">
@@ -81,7 +81,7 @@
 
 // export default Login;
 
-import { Link } from '@/i18n/routing';
+import { Link } from "@/i18n/routing";
 import LoginForm from "@/components/partials/auth/login-form";
 import Image from "next/image";
 import Social from "@/components/partials/auth/social";
@@ -97,7 +97,7 @@ const Login = () => {
             {/* Top: Logo */}
             <div className="flex justify-center pt-20">
               <Link href="/" className="mb-6 inline-block">
-                <Logo  width={400} height={400}/>
+                <Logo width={400} height={400} />
               </Link>
             </div>
 

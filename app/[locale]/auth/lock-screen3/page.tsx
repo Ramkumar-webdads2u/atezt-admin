@@ -1,5 +1,5 @@
 import Lock from "@/components/partials/auth/lock";
-import { Link } from '@/i18n/routing';
+import { Link } from "@/i18n/routing";
 import Image from "next/image";
 import Logo from "@/components/logo";
 
@@ -9,10 +9,10 @@ const LockScreen3 = () => {
       className="flex w-full items-center overflow-hidden min-h-dvh h-dvh basis-full bg-cover bg-no-repeat bg-center"
       style={{
         backgroundImage: `url(/images/all-img/login-bg.png)`,
-      }} >
+      }}
+    >
       <div className="overflow-y-auto flex flex-wrap w-full h-dvh">
-        <div
-          className="flex-1 overflow-hidden text-[40px] leading-[48px] text-default-600 lg:w-1/2 lg:block hidden">
+        <div className="flex-1 overflow-hidden text-[40px] leading-[48px] text-default-600 lg:w-1/2 lg:block hidden">
           <div className="flex justify-center items-center min-h-screen">
             <Link href="/" className="">
               <Image

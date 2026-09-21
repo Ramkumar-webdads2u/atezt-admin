@@ -11,21 +11,15 @@ export const getApiMethos = async <T>({
   queryKey,
   signal,
 }: QueryFunctionContext<readonly unknown[]>): Promise<T> => {
-  const [, apiConstant, query_string] = queryKey as [
-    string,
-    string,
-    string
-  ];
+  const [, apiConstant, query_string] = queryKey as [string, string, string];
 
-  const api =
-    `${apiConstant}${query_string || ""}`;
+  const api = `${apiConstant}${query_string || ""}`;
 
   // console.log("GET:", api);
 
-  const response =
-    await axios.get<T>(api, {
-      signal,
-    });
+  const response = await axios.get<T>(api, {
+    signal,
+  });
 
   return response.data;
 };
@@ -38,11 +32,7 @@ export const getPublicApiMethod = async <T>({
   queryKey,
   signal,
 }: QueryFunctionContext<readonly unknown[]>): Promise<T> => {
-  const [, apiConstant, query_string] = queryKey as [
-    string,
-    string,
-    string
-  ];
+  const [, apiConstant, query_string] = queryKey as [string, string, string];
 
   const api = `${apiConstant}${query_string || ""}`;
 
@@ -76,19 +66,13 @@ export const fetchApi = async <T>(
 
 export const postApiMethod = async (
   apiUrl: string,
-  body:
-    | Record<string, unknown>
-    | FormData
-    | URLSearchParams,
+  body: Record<string, unknown> | FormData | URLSearchParams,
 ) => {
   try {
     // console.log("POST API:", apiUrl);
     // console.log("POST BODY:", body);
 
-    const response = await axios.post(
-      apiUrl,
-      body,
-    );
+    const response = await axios.post(apiUrl, body);
 
     return response.data;
   } catch (error) {
@@ -108,18 +92,13 @@ export const postApiMethod = async (
 
 export const putApiMethod = async (
   apiUrl: string,
-  body:
-    | Record<string, unknown>
-    | FormData,
+  body: Record<string, unknown> | FormData,
 ) => {
   try {
     // console.log("PUT API:", apiUrl);
     // console.log("PUT BODY:", body);
 
-    const response = await axios.put(
-      apiUrl,
-      body,
-    );
+    const response = await axios.put(apiUrl, body);
 
     return response.data;
   } catch (error) {
@@ -139,17 +118,12 @@ export const putApiMethod = async (
 
 export const patchApiMethod = async (
   apiUrl: string,
-  body:
-    | Record<string, unknown>
-    | FormData,
+  body: Record<string, unknown> | FormData,
 ) => {
   try {
     // console.log("PATCH API:", apiUrl);
 
-    const response = await axios.patch(
-      apiUrl,
-      body,
-    );
+    const response = await axios.patch(apiUrl, body);
 
     return response.data;
   } catch (error) {
@@ -168,12 +142,7 @@ export const patchApiMethod = async (
 ===================================================== */
 
 export const apiMethod = async (
-  method:
-    | "post"
-    | "put"
-    | "patch"
-    | "delete"
-    | "get",
+  method: "post" | "put" | "patch" | "delete" | "get",
   apiUrl: string,
   body?: Record<string, unknown> | FormData,
 ) => {
@@ -187,11 +156,7 @@ export const apiMethod = async (
       url: apiUrl,
     };
 
-    if (
-      body !== undefined &&
-      method !== "delete" &&
-      method !== "get"
-    ) {
+    if (body !== undefined && method !== "delete" && method !== "get") {
       config.data = body;
     }
 
@@ -220,23 +185,17 @@ export const apiMethod = async (
 export const postVideoMethod = async (
   apiUrl: string,
   file: File,
-  onUploadProgress?: (
-    progress: number
-  ) => void,
+  onUploadProgress?: (progress: number) => void,
   controller?: AbortController,
 ) => {
   const formData = new FormData();
 
-  const fullUrl =
-    `${APIURLS.baseUrl}${apiUrl}`;
+  const fullUrl = `${APIURLS.baseUrl}${apiUrl}`;
 
-  const param =
-    new URL(fullUrl).searchParams.get("type");
+  const param = new URL(fullUrl).searchParams.get("type");
 
   formData.append(
-    param === "course-attachments"
-      ? "attachment"
-      : "lectureFiles",
+    param === "course-attachments" ? "attachment" : "lectureFiles",
     file,
   );
 
@@ -244,37 +203,24 @@ export const postVideoMethod = async (
     const config = {
       signal: controller?.signal,
 
-      onUploadProgress: (
-        event: import("axios").AxiosProgressEvent
-      ) => {
+      onUploadProgress: (event: import("axios").AxiosProgressEvent) => {
         if (event.total) {
-          const progress = Math.round(
-            (event.loaded * 100) /
-            event.total
-          );
+          const progress = Math.round((event.loaded * 100) / event.total);
 
           onUploadProgress?.(progress);
         }
       },
 
       headers: {
-        "Content-Type":
-          "multipart/form-data",
+        "Content-Type": "multipart/form-data",
       },
     };
 
-    const response =
-      await axios.post(
-        apiUrl,
-        formData,
-        config
-      );
+    const response = await axios.post(apiUrl, formData, config);
 
     return response.data;
   } catch (error: unknown) {
-    if (
-      axiosLib.isCancel(error)
-    ) {
+    if (axiosLib.isCancel(error)) {
       // console.warn(
       //   "Upload canceled by user"
       // );

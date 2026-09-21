@@ -104,64 +104,40 @@ const MENU_CONFIG: {
   },
 ];
 
-export function buildMenuList(
-  pathname: string,
-  t: any,
-): Group[] {
+export function buildMenuList(pathname: string, t: any): Group[] {
   return [
     {
       groupLabel: "",
       id: "main",
 
-      menus: MENU_CONFIG.map(
-        (menu) => ({
-          id: menu.id,
+      menus: MENU_CONFIG.map((menu) => ({
+        id: menu.id,
 
-          href: menu.href,
+        href: menu.href,
 
-          label: t(menu.label),
+        label: t(menu.label),
 
-          active: isActive(
-            pathname,
-            menu.href
-          ),
+        active: isActive(pathname, menu.href),
 
-          icon:
-            COMMON_ICONS[
-            menu.icon
-            ],
+        icon: COMMON_ICONS[menu.icon],
 
-          submenus:
-            menu.submenus?.map(
-              (sub) => ({
-                href: sub.href,
+        submenus:
+          menu.submenus?.map((sub) => ({
+            href: sub.href,
 
-                label: t(
-                  sub.label
-                ),
+            label: t(sub.label),
 
-                active: isActive(
-                  pathname,
-                  sub.href
-                ),
+            active: isActive(pathname, sub.href),
 
-                icon:
-                  COMMON_ICONS[
-                  sub.icon
-                  ],
+            icon: COMMON_ICONS[sub.icon],
 
-                children: [],
-              })
-            ) || [],
-        })
-      ),
+            children: [],
+          })) || [],
+      })),
     },
   ];
 }
 
-export const getMenuList =
-  buildMenuList;
+export const getMenuList = buildMenuList;
 
-export const getHorizontalMenuList =
-  buildMenuList;
-
+export const getHorizontalMenuList = buildMenuList;

@@ -1,4 +1,3 @@
-
 import { atom, useAtom } from "jotai";
 
 export type ChatConfig = {
