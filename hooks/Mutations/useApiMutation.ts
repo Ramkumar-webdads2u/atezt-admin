@@ -1,62 +1,73 @@
-import { useMutation, UseMutationResult } from "@tanstack/react-query";
-// import { useNavigate } from "react-router";
-import { apiMethod } from "../../services/global";
-import { showToast } from "@/lib/toastSonner";
+"use client";
 
-type HttpMethod = "post" | "put" | "patch" | "delete" | "get";
+import {
+  useMutation,
+  UseMutationResult,
+} from "@tanstack/react-query";
 
-interface ApiMutationParams {
-  url: { apiUrl: string };
+import axios from "@/services/axiosInstance";
+
+type HttpMethod =
+  | "post"
+  | "put"
+  | "patch"
+  | "delete"
+  | "get";
+
+interface MutationVariables {
+  url: {
+    apiUrl: string;
+  };
+
   body?: Record<string, unknown> | FormData;
 }
 
-interface ApiResponse {
-  status?: boolean;
-  error?: boolean,
-  success?: boolean;
-  message?: string;
-  // data?: unknown;
-  data: {
-    [x: string]: any;
-    id: string;
-  };
-}
+const useApiMutation = (
+  method: HttpMethod
+): UseMutationResult<
+  any,
+  unknown,
+  MutationVariables
+> => {
+  return useMutation({
+    mutationFn: async ({
+      url,
+      body,
+    }: MutationVariables) => {
+      // console.log(
+      //   `${method.toUpperCase()} REQUEST`
+      // );
 
-// define a lightweight custom error type for your use case
-interface ApiError {
-  response?: {
-    data?: {
-      message?: string;
-    };
-  };
-}
+      // console.log(
+      //   "URL:",
+      //   url.apiUrl
+      // );
 
-export default function useApiMutation(
-  method: HttpMethod,
-  onSuccessRedirect?: string,
-  customSuccessMessage?: string
-): UseMutationResult<ApiResponse, ApiError, ApiMutationParams> {
-  // const navigate = useNavigate();
+      // console.log(
+      //   "BODY:",
+      //   body
+      // );
 
-  return useMutation<ApiResponse, ApiError, ApiMutationParams>({
-    mutationFn: async ({ url, body }) => {
-      return (await apiMethod(method, url.apiUrl, body)) as unknown as ApiResponse;
-    },
-    onSuccess: (response) => {
-      const message = customSuccessMessage || response.message || "Action successful!";
-      showToast.success(message);
+      const response =
+        await axios.request({
+          method,
+          url: url.apiUrl,
+          data:
+            method === "delete" ||
+              method === "get"
+              ? undefined
+              : body,
+        });
 
-      // console.log(`${method.toUpperCase()} success:`, response);
+      // console.log(
+      //   `${method.toUpperCase()} RESPONSE:`,
+      //   response.status,
+      //   response.data
+      // );
 
-      if (onSuccessRedirect) {
-        // navigate(onSuccessRedirect);
-      }
-    },
-    onError: (error) => {
-      const errorMessage =
-        error.response?.data?.message || "Something went wrong!";
-      showToast.error(errorMessage);
-      console.error(`${method.toUpperCase()} error:`, error);
+      return response.data;
     },
   });
-}
+};
+
+export default useApiMutation;

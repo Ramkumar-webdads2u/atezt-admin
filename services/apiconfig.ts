@@ -1,8 +1,15 @@
 const BASE_URL =
-  process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000";
+  process.env.NEXT_PUBLIC_API_URL ||
+  "http://192.168.1.35:8000/v1";
+
+// for url dont use tunnel or third party because it takes more time to trigger the api
+// Frontend -> localhost:3000 -> localhost:5000 -> Backend
+// Frontend -> localhost:3000 -> Internet/network -> Dev Tunnel gateway -> Tunnel connection -> Your computer -> localhost:5000 -> Backend
 
 export const APIURLS = {
-  baseUrl: BASE_URL.endsWith("/") ? BASE_URL : `${BASE_URL}/`,
+  baseUrl: BASE_URL.endsWith("/")
+    ? BASE_URL
+    : `${BASE_URL}/`,
   imageUrl: BASE_URL,
 };
 
