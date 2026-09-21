@@ -111,7 +111,7 @@ const ProfileDropdown = () => {
         aria-label="Open profile menu"
       >
         {/* Avatar */}
-        <div className="flex h-9 w-9 items-center justify-center overflow-hidden rounded-full bg-primary text-sm font-semibold text-primary-foreground">
+        <div className="flex h-9 w-9 items-center justify-center overflow-hidden rounded-full bg-[#00a63c] text-sm font-semibold text-primary-foreground">
           A
         </div>
 
@@ -141,11 +141,11 @@ const ProfileDropdown = () => {
             top: position.top,
             right: position.right,
           }}
-          className="fixed z-[9999] w-72 overflow-hidden rounded-xl border bg-background shadow-xl"
+          className="fixed z-[9999] w-60 md:w-72 overflow-hidden rounded-xl border bg-background shadow-xl"
         >
           {/* Profile Header */}
           <div className="flex items-center gap-3 border-b p-4">
-            <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-primary text-base font-semibold text-primary-foreground">
+            <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[#00a63c] text-base font-semibold text-primary-foreground">
               A
             </div>
 

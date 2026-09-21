@@ -19,7 +19,7 @@ const NextCodeHeader = () => {
 
       <div className="nav-tools flex min-w-fit items-center gap-3 md:gap-4">
         <ThemeSwitcher />
-        <Notifications />
+        {/* <Notifications /> */}
         <ProfileDropdown />
         <SheetMenu />
       </div>
