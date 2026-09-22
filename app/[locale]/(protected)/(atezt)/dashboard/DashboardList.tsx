@@ -1,6 +1,9 @@
 "use client";
 
-import React from "react";
+import React, { useMemo, useState } from "react";
+import { motion } from "framer-motion";
+import Link from "next/link";
+
 import {
   Users,
   UserCheck,
@@ -17,7 +20,8 @@ import useReactQuery from "@/hooks/useReactQuery";
 import { RetryableError } from "@/components/ui/RetryableError";
 
 interface DashboardChartItem {
-  year: number;
+  year?: number;
+  month?: number;
   label: string;
   users?: number;
   revenue?: number;
@@ -25,7 +29,7 @@ interface DashboardChartItem {
 
 interface DashboardResponse {
   year: number;
-  period: string;
+  period: "yearly" | "monthly";
 
   users: {
     total: number;
@@ -60,13 +64,38 @@ interface RecentResultsResponse {
   recent_results: RecentResult[];
 }
 
+const GREEN = "#16A34A";
+
 function DashboardList() {
+  const currentYear = new Date().getFullYear();
+
+  const [period, setPeriod] = useState<"monthly" | "yearly">("monthly");
+
+  const [year, setYear] = useState(currentYear);
+
+  // =========================
+  // DASHBOARD QUERY
+  // =========================
+
+  const dashboardQueryString = useMemo(() => {
+    const params = new URLSearchParams();
+
+    params.set("period", period);
+    params.set("year", String(year));
+
+    return `?${params.toString()}`;
+  }, [period, year]);
+
   const {
     data: dashboardResponse,
     isLoading: dashboardLoading,
     isError: dashboardError,
     refetch: refetchDashboard,
-  } = useReactQuery<DashboardResponse>("Dashboard");
+  } = useReactQuery<DashboardResponse>("Dashboard", dashboardQueryString);
+
+  // =========================
+  // RECENT RESULTS
+  // =========================
 
   const {
     data: recentResponse,
@@ -78,6 +107,10 @@ function DashboardList() {
   const isLoading = dashboardLoading || recentLoading;
 
   const isError = dashboardError || recentError;
+
+  // =========================
+  // ERROR
+  // =========================
 
   if (isError) {
     return (
@@ -92,105 +125,317 @@ function DashboardList() {
   }
 
   const dashboard = dashboardResponse;
+
   const recentResults = recentResponse?.recent_results ?? [];
 
   const usersChart = dashboard?.users?.chart ?? [];
+
   const revenueChart = dashboard?.revenue?.chart ?? [];
+
+  // =========================
+  // MAX VALUES
+  // =========================
+
+  const maxUsers = Math.max(...usersChart.map((item) => item.users ?? 0), 1);
+
+  const maxRevenue = Math.max(
+    ...revenueChart.map((item) => item.revenue ?? 0),
+    1,
+  );
+
+  // =========================
+  // YEARS
+  // =========================
+
+  const years = Array.from({ length: 5 }, (_, index) => currentYear - index);
 
   return (
     <div className="w-full space-y-6 px-5 py-4">
       {/* ========================= */}
       {/* HEADER */}
       {/* ========================= */}
-      <div>
-        <h1 className="text-2xl font-semibold tracking-tight">Dashboard</h1>
 
-        <p className="text-sm text-muted-foreground">
-          Overview of users, revenue and exam activity.
-        </p>
-      </div>
+      <motion.div
+        initial={{
+          opacity: 0,
+          y: -10,
+        }}
+        animate={{
+          opacity: 1,
+          y: 0,
+        }}
+        transition={{
+          duration: 0.4,
+        }}
+        className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between"
+      >
+        <div>
+          <h1 className="text-2xl font-semibold tracking-tight">Dashboard</h1>
+
+          <p className="text-sm text-muted-foreground">
+            Overview of users, revenue and exam activity.
+          </p>
+        </div>
+
+        {/* ========================= */}
+        {/* FILTERS */}
+        {/* ========================= */}
+
+        <div className="flex items-center gap-3">
+          {/* Period */}
+
+          <select
+            value={period}
+            onChange={(event) => {
+              setPeriod(event.target.value as "monthly" | "yearly");
+            }}
+            className="h-9 rounded-md border bg-background px-3 text-sm outline-none transition focus:ring-2 focus:ring-green-600/20"
+          >
+            <option value="monthly">Monthly</option>
+
+            <option value="yearly">Yearly</option>
+          </select>
+
+          {/* Year */}
+
+          <select
+            value={year}
+            onChange={(event) => {
+              setYear(Number(event.target.value));
+            }}
+            className="h-9 rounded-md border bg-background px-3 text-sm outline-none transition focus:ring-2 focus:ring-green-600/20"
+          >
+            {years.map((item) => (
+              <option key={item} value={item}>
+                {item}
+              </option>
+            ))}
+          </select>
+        </div>
+      </motion.div>
 
       {/* ========================= */}
       {/* SUMMARY CARDS */}
       {/* ========================= */}
+
       <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
         {/* Total Users */}
-        <div className="rounded-xl border bg-background p-5">
+
+        <motion.div
+          initial={{
+            opacity: 0,
+            y: 15,
+          }}
+          animate={{
+            opacity: 1,
+            y: 0,
+          }}
+          transition={{
+            duration: 0.4,
+            delay: 0.05,
+          }}
+          className="rounded-xl border bg-background p-5"
+        >
           <div className="flex items-start justify-between">
             <div>
               <p className="text-sm text-muted-foreground">Total Users</p>
 
-              <p className="mt-2 text-2xl font-semibold">
+              <motion.p
+                initial={{
+                  opacity: 0,
+                }}
+                animate={{
+                  opacity: 1,
+                }}
+                className="mt-2 text-2xl font-semibold"
+              >
                 {isLoading ? "..." : (dashboard?.users?.total ?? 0)}
-              </p>
+              </motion.p>
             </div>
 
-            <div className="rounded-lg bg-muted p-2">
-              <Users className="h-5 w-5" />
+            <div
+              className="rounded-lg p-2"
+              style={{
+                backgroundColor: `${GREEN}15`,
+              }}
+            >
+              <Users
+                className="h-5 w-5"
+                style={{
+                  color: GREEN,
+                }}
+              />
             </div>
           </div>
-        </div>
+        </motion.div>
 
         {/* Active Users */}
-        <div className="rounded-xl border bg-background p-5">
+
+        <motion.div
+          initial={{
+            opacity: 0,
+            y: 15,
+          }}
+          animate={{
+            opacity: 1,
+            y: 0,
+          }}
+          transition={{
+            duration: 0.4,
+            delay: 0.1,
+          }}
+          className="rounded-xl border bg-background p-5"
+        >
           <div className="flex items-start justify-between">
             <div>
               <p className="text-sm text-muted-foreground">Active Users</p>
 
-              <p className="mt-2 text-2xl font-semibold">
+              <motion.p
+                initial={{
+                  opacity: 0,
+                }}
+                animate={{
+                  opacity: 1,
+                }}
+                className="mt-2 text-2xl font-semibold"
+              >
                 {isLoading ? "..." : (dashboard?.users?.active ?? 0)}
-              </p>
+              </motion.p>
             </div>
 
-            <div className="rounded-lg bg-muted p-2">
-              <UserCheck className="h-5 w-5" />
+            <div
+              className="rounded-lg p-2"
+              style={{
+                backgroundColor: `${GREEN}15`,
+              }}
+            >
+              <UserCheck
+                className="h-5 w-5"
+                style={{
+                  color: GREEN,
+                }}
+              />
             </div>
           </div>
-        </div>
+        </motion.div>
 
         {/* Inactive Users */}
-        <div className="rounded-xl border bg-background p-5">
+
+        <motion.div
+          initial={{
+            opacity: 0,
+            y: 15,
+          }}
+          animate={{
+            opacity: 1,
+            y: 0,
+          }}
+          transition={{
+            duration: 0.4,
+            delay: 0.15,
+          }}
+          className="rounded-xl border bg-background p-5"
+        >
           <div className="flex items-start justify-between">
             <div>
               <p className="text-sm text-muted-foreground">Inactive Users</p>
 
-              <p className="mt-2 text-2xl font-semibold">
+              <motion.p
+                initial={{
+                  opacity: 0,
+                }}
+                animate={{
+                  opacity: 1,
+                }}
+                className="mt-2 text-2xl font-semibold"
+              >
                 {isLoading ? "..." : (dashboard?.users?.inactive ?? 0)}
-              </p>
+              </motion.p>
             </div>
 
             <div className="rounded-lg bg-muted p-2">
-              <UserX className="h-5 w-5" />
+              <UserX className="h-5 w-5 text-red-500" />
             </div>
           </div>
-        </div>
+        </motion.div>
 
         {/* Revenue */}
-        <div className="rounded-xl border bg-background p-5">
+
+        <motion.div
+          initial={{
+            opacity: 0,
+            y: 15,
+          }}
+          animate={{
+            opacity: 1,
+            y: 0,
+          }}
+          transition={{
+            duration: 0.4,
+            delay: 0.2,
+          }}
+          className="rounded-xl border bg-background p-5"
+        >
           <div className="flex items-start justify-between">
             <div>
               <p className="text-sm text-muted-foreground">Total Revenue</p>
 
-              <p className="mt-2 text-2xl font-semibold">
+              <motion.p
+                initial={{
+                  opacity: 0,
+                }}
+                animate={{
+                  opacity: 1,
+                }}
+                className="mt-2 text-2xl font-semibold"
+              >
                 {isLoading
                   ? "..."
-                  : `${dashboard?.revenue?.currency === "INR" ? "₹" : ""}${dashboard?.revenue?.total ?? 0}`}
-              </p>
+                  : `${dashboard?.revenue?.currency === "INR" ? "₹" : ""}${
+                      dashboard?.revenue?.total ?? 0
+                    }`}
+              </motion.p>
             </div>
 
-            <div className="rounded-lg bg-muted p-2">
-              <IndianRupee className="h-5 w-5" />
+            <div
+              className="rounded-lg p-2"
+              style={{
+                backgroundColor: `${GREEN}15`,
+              }}
+            >
+              <IndianRupee
+                className="h-5 w-5"
+                style={{
+                  color: GREEN,
+                }}
+              />
             </div>
           </div>
-        </div>
+        </motion.div>
       </div>
 
       {/* ========================= */}
       {/* EXAM SUMMARY */}
       {/* ========================= */}
+
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
-        {/* Categories */}
-        <div className="rounded-xl border bg-background p-5">
+        {/* Exam Categories */}
+
+        <motion.div
+          initial={{
+            opacity: 0,
+            y: 15,
+          }}
+          animate={{
+            opacity: 1,
+            y: 0,
+          }}
+          transition={{
+            duration: 0.4,
+            delay: 0.25,
+          }}
+          className="rounded-xl border bg-background p-5"
+        >
           <div className="flex items-center gap-4">
             <div className="rounded-lg bg-muted p-3">
               <FolderOpen className="h-5 w-5" />
@@ -204,10 +449,25 @@ function DashboardList() {
               </p>
             </div>
           </div>
-        </div>
+        </motion.div>
 
         {/* Exams */}
-        <div className="rounded-xl border bg-background p-5">
+
+        <motion.div
+          initial={{
+            opacity: 0,
+            y: 15,
+          }}
+          animate={{
+            opacity: 1,
+            y: 0,
+          }}
+          transition={{
+            duration: 0.4,
+            delay: 0.3,
+          }}
+          className="rounded-xl border bg-background p-5"
+        >
           <div className="flex items-center gap-4">
             <div className="rounded-lg bg-muted p-3">
               <FileText className="h-5 w-5" />
@@ -221,10 +481,25 @@ function DashboardList() {
               </p>
             </div>
           </div>
-        </div>
+        </motion.div>
 
         {/* Exam Per User */}
-        <div className="rounded-xl border bg-background p-5">
+
+        <motion.div
+          initial={{
+            opacity: 0,
+            y: 15,
+          }}
+          animate={{
+            opacity: 1,
+            y: 0,
+          }}
+          transition={{
+            duration: 0.4,
+            delay: 0.35,
+          }}
+          className="rounded-xl border bg-background p-5"
+        >
           <div className="flex items-center gap-4">
             <div className="rounded-lg bg-muted p-3">
               <BarChart3 className="h-5 w-5" />
@@ -238,125 +513,381 @@ function DashboardList() {
               </p>
             </div>
           </div>
-        </div>
+        </motion.div>
       </div>
 
       {/* ========================= */}
-      {/* YEARLY CHARTS */}
+      {/* USERS + REVENUE CHARTS */}
       {/* ========================= */}
+
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
-        {/* Users Chart */}
-        <div className="rounded-xl border bg-background p-5">
+        {/* ========================= */}
+        {/* USERS CHART */}
+        {/* ========================= */}
+
+        <motion.div
+          initial={{
+            opacity: 0,
+            y: 20,
+          }}
+          animate={{
+            opacity: 1,
+            y: 0,
+          }}
+          transition={{
+            duration: 0.5,
+            delay: 0.4,
+          }}
+          className="rounded-xl border bg-background p-5"
+        >
           <div className="flex items-center justify-between">
             <div>
-              <h2 className="font-semibold">Users</h2>
+              <h2 className="text-base font-semibold">Users</h2>
 
-              <p className="text-sm text-muted-foreground">
-                Yearly user overview
+              <p className="mt-1 text-sm text-muted-foreground">
+                {period === "monthly"
+                  ? `${year} monthly user overview`
+                  : `${year} yearly user overview`}
               </p>
             </div>
 
-            <TrendingUp className="h-5 w-5 text-muted-foreground" />
+            <div
+              className="rounded-lg p-2"
+              style={{
+                backgroundColor: `${GREEN}15`,
+              }}
+            >
+              <TrendingUp
+                className="h-5 w-5"
+                style={{
+                  color: GREEN,
+                }}
+              />
+            </div>
           </div>
 
-          <div className="mt-6 space-y-4">
-            {usersChart.length === 0 ? (
-              <div className="py-8 text-center text-sm text-muted-foreground">
+          <div className="mt-8">
+            {dashboardLoading ? (
+              <div className="flex h-[280px] items-center justify-center text-sm text-muted-foreground">
+                Loading users chart...
+              </div>
+            ) : usersChart.length === 0 ? (
+              <div className="flex h-[280px] items-center justify-center text-sm text-muted-foreground">
                 No user chart data available.
               </div>
             ) : (
-              usersChart.map((item) => (
-                <div key={item.year} className="space-y-2">
-                  <div className="flex items-center justify-between text-sm">
-                    <span className="font-medium">{item.label}</span>
+              <div className="relative h-[280px]">
+                {/* Grid */}
 
-                    <span className="text-muted-foreground">
-                      {item.users ?? 0} users
-                    </span>
-                  </div>
-
-                  <div className="h-2 overflow-hidden rounded-full bg-muted">
+                <div className="absolute inset-x-0 bottom-10 top-0 flex flex-col justify-between">
+                  {[4, 3, 2, 1, 0].map((line) => (
                     <div
-                      className="h-full rounded-full bg-primary"
-                      style={{
-                        width: `${Math.min(
-                          100,
-                          ((item.users ?? 0) /
-                            Math.max(dashboard?.users?.total ?? 1, 1)) *
-                            100,
-                        )}%`,
-                      }}
+                      key={line}
+                      className="border-t border-dashed border-muted"
                     />
-                  </div>
+                  ))}
                 </div>
-              ))
+
+                {/* Bars */}
+
+                <div className="absolute inset-x-0 bottom-10 top-0 flex items-end justify-around gap-1 px-1 sm:gap-2 sm:px-2">
+                  {usersChart.map((item, index) => {
+                    const value = item.users ?? 0;
+
+                    const height = (value / maxUsers) * 100;
+
+                    return (
+                      <div
+                        key={item.month ?? item.year ?? index}
+                        className="flex h-full min-w-0 flex-1 flex-col items-center justify-end"
+                      >
+                        <span className="mb-2 text-[10px] font-medium text-muted-foreground sm:text-xs">
+                          {value === 0 ? "-" : `₹${value}`}
+                        </span>
+
+                        <motion.div
+                          initial={{
+                            height: 0,
+                            opacity: 0,
+                          }}
+                          animate={{
+                            height: `${Math.max(height, value > 0 ? 4 : 0)}%`,
+                            opacity: 1,
+                          }}
+                          transition={{
+                            duration: 0.7,
+                            delay: 0.1 + index * 0.04,
+                            ease: "easeOut",
+                          }}
+                          whileHover={{
+                            scaleX: 1.08,
+                          }}
+                          className="w-full max-w-[42px] rounded-t-md sm:max-w-[52px]"
+                          style={{
+                            backgroundColor: GREEN,
+                          }}
+                        />
+                      </div>
+                    );
+                  })}
+                </div>
+
+                {/* X Axis */}
+
+                <div className="absolute inset-x-0 bottom-0 flex items-center justify-around gap-1 border-t pt-3 sm:gap-2">
+                  {usersChart.map((item, index) => (
+                    <span
+                      key={`user-label-${item.month ?? item.year ?? index}`}
+                      className="min-w-0 flex-1 text-center text-[10px] text-muted-foreground sm:text-xs"
+                    >
+                      {item.label}
+                    </span>
+                  ))}
+                </div>
+              </div>
             )}
           </div>
-        </div>
 
-        {/* Revenue Chart */}
-        <div className="rounded-xl border bg-background p-5">
-          <div className="flex items-center justify-between">
+          {/* Users Summary */}
+
+          <div className="mt-5 flex items-end justify-between border-t pt-5">
             <div>
-              <h2 className="font-semibold">Revenue</h2>
+              <motion.p
+                initial={{
+                  opacity: 0,
+                  y: 5,
+                }}
+                animate={{
+                  opacity: 1,
+                  y: 0,
+                }}
+                className="text-3xl font-semibold"
+                style={{
+                  color: GREEN,
+                }}
+              >
+                {dashboard?.users?.total ?? 0}
+              </motion.p>
+
+              <p className="text-sm text-muted-foreground">Total Users</p>
+            </div>
+
+            <div className="text-right">
+              <p
+                className="text-base font-semibold"
+                style={{
+                  color: GREEN,
+                }}
+              >
+                {dashboard?.users?.active ?? 0} Active Users
+              </p>
 
               <p className="text-sm text-muted-foreground">
-                Yearly revenue overview
+                {dashboard?.users?.inactive ?? 0} Inactive Users
+              </p>
+            </div>
+          </div>
+        </motion.div>
+
+        {/* ========================= */}
+        {/* REVENUE CHART */}
+        {/* ========================= */}
+
+        <motion.div
+          initial={{
+            opacity: 0,
+            y: 20,
+          }}
+          animate={{
+            opacity: 1,
+            y: 0,
+          }}
+          transition={{
+            duration: 0.5,
+            delay: 0.5,
+          }}
+          className="rounded-xl border bg-background p-5"
+        >
+          <div className="flex items-center justify-between">
+            <div>
+              <h2 className="text-base font-semibold">Revenue</h2>
+
+              <p className="mt-1 text-sm text-muted-foreground">
+                {period === "monthly"
+                  ? `${year} monthly revenue overview`
+                  : `${year} yearly revenue overview`}
               </p>
             </div>
 
-            <IndianRupee className="h-5 w-5 text-muted-foreground" />
+            <div
+              className="rounded-lg p-2"
+              style={{
+                backgroundColor: `${GREEN}15`,
+              }}
+            >
+              <IndianRupee
+                className="h-5 w-5"
+                style={{
+                  color: GREEN,
+                }}
+              />
+            </div>
           </div>
 
-          <div className="mt-6 space-y-4">
-            {revenueChart.length === 0 ? (
-              <div className="py-8 text-center text-sm text-muted-foreground">
+          <div className="mt-8">
+            {dashboardLoading ? (
+              <div className="flex h-[280px] items-center justify-center text-sm text-muted-foreground">
+                Loading revenue chart...
+              </div>
+            ) : revenueChart.length === 0 ? (
+              <div className="flex h-[280px] items-center justify-center text-sm text-muted-foreground">
                 No revenue chart data available.
               </div>
             ) : (
-              revenueChart.map((item) => (
-                <div key={item.year} className="space-y-2">
-                  <div className="flex items-center justify-between text-sm">
-                    <span className="font-medium">{item.label}</span>
+              <div className="relative h-[280px]">
+                {/* Grid */}
 
-                    <span className="text-muted-foreground">
-                      ₹{item.revenue ?? 0}
-                    </span>
-                  </div>
-
-                  <div className="h-2 overflow-hidden rounded-full bg-muted">
+                <div className="absolute inset-x-0 bottom-10 top-0 flex flex-col justify-between">
+                  {[4, 3, 2, 1, 0].map((line) => (
                     <div
-                      className="h-full rounded-full bg-primary"
-                      style={{
-                        width: `${Math.min(
-                          100,
-                          ((item.revenue ?? 0) /
-                            Math.max(dashboard?.revenue?.total ?? 1, 1)) *
-                            100,
-                        )}%`,
-                      }}
+                      key={line}
+                      className="border-t border-dashed border-muted"
                     />
-                  </div>
+                  ))}
                 </div>
-              ))
+
+                {/* Bars */}
+
+                <div className="absolute inset-x-0 bottom-10 top-0 flex items-end justify-around gap-1 px-1 sm:gap-2 sm:px-2">
+                  {revenueChart.map((item, index) => {
+                    const value = item.revenue ?? 0;
+
+                    const height = (value / maxRevenue) * 100;
+
+                    return (
+                      <div
+                        key={item.month ?? item.year ?? index}
+                        className="flex h-full min-w-0 flex-1 flex-col items-center justify-end"
+                      >
+                        <span className="mb-2 text-[10px] font-medium text-muted-foreground sm:text-xs">
+                          ₹{value}
+                        </span>
+
+                        <motion.div
+                          initial={{
+                            height: 0,
+                            opacity: 0,
+                          }}
+                          animate={{
+                            height: `${Math.max(height, value > 0 ? 4 : 0)}%`,
+                            opacity: 1,
+                          }}
+                          transition={{
+                            duration: 0.7,
+                            delay: 0.15 + index * 0.04,
+                            ease: "easeOut",
+                          }}
+                          whileHover={{
+                            scaleX: 1.08,
+                          }}
+                          className="w-full max-w-[42px] rounded-t-md sm:max-w-[52px]"
+                          style={{
+                            backgroundColor: GREEN,
+                          }}
+                        />
+                      </div>
+                    );
+                  })}
+                </div>
+
+                {/* X Axis */}
+
+                <div className="absolute inset-x-0 bottom-0 flex items-center justify-around gap-1 border-t pt-3 sm:gap-2">
+                  {revenueChart.map((item, index) => (
+                    <span
+                      key={`revenue-label-${item.month ?? item.year ?? index}`}
+                      className="min-w-0 flex-1 text-center text-[10px] text-muted-foreground sm:text-xs"
+                    >
+                      {item.label}
+                    </span>
+                  ))}
+                </div>
+              </div>
             )}
           </div>
-        </div>
+
+          {/* Revenue Summary */}
+
+          <div className="mt-5 flex items-end justify-between border-t pt-5">
+            <div>
+              <motion.p
+                initial={{
+                  opacity: 0,
+                  y: 5,
+                }}
+                animate={{
+                  opacity: 1,
+                  y: 0,
+                }}
+                className="text-3xl font-semibold"
+                style={{
+                  color: GREEN,
+                }}
+              >
+                {dashboard?.revenue?.currency === "INR" ? "₹" : ""}
+                {dashboard?.revenue?.total ?? 0}
+              </motion.p>
+
+              <p className="text-sm text-muted-foreground">Total Revenue</p>
+            </div>
+
+            <div className="text-right">
+              <p className="text-sm text-muted-foreground">Active Year</p>
+
+              <p className="text-base font-medium">{dashboard?.year ?? year}</p>
+            </div>
+          </div>
+        </motion.div>
       </div>
 
       {/* ========================= */}
       {/* RECENT RESULTS */}
       {/* ========================= */}
-      <div className="rounded-xl border bg-background">
-        <div className="border-b px-5 py-4">
-          <h2 className="font-semibold">Recent Results</h2>
 
-          <p className="text-sm text-muted-foreground">
-            Latest exam attempts and results.
-          </p>
+      <motion.div
+        initial={{
+          opacity: 0,
+          y: 20,
+        }}
+        animate={{
+          opacity: 1,
+          y: 0,
+        }}
+        transition={{
+          duration: 0.5,
+          delay: 0.6,
+        }}
+        className="rounded-xl border bg-background"
+      >
+        <div className="flex items-center justify-between border-b px-5 py-4">
+          <div>
+            <h2 className="font-semibold">Recent Results</h2>
+
+            <p className="text-sm text-muted-foreground">
+              Latest exam attempts and results.
+            </p>
+          </div>
+
+          <Link
+            href="results"
+            className="text-sm font-medium text-green-600 transition-colors hover:text-green-700"
+          >
+            See More
+          </Link>
         </div>
 
         {/* Desktop */}
+
         <div className="hidden overflow-x-auto md:block">
           {recentLoading ? (
             <div className="p-6 text-sm text-muted-foreground">
@@ -422,6 +953,7 @@ function DashboardList() {
         </div>
 
         {/* Mobile */}
+
         <div className="space-y-3 p-4 md:hidden">
           {recentLoading ? (
             <div className="py-6 text-center text-sm text-muted-foreground">
@@ -499,7 +1031,7 @@ function DashboardList() {
             ))
           )}
         </div>
-      </div>
+      </motion.div>
     </div>
   );
 }

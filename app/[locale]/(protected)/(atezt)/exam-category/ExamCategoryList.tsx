@@ -349,11 +349,11 @@ function ExamCategoryList() {
               </DropdownMenuTrigger>
 
               <DropdownMenuContent align="end">
-                <DropdownMenuItem onClick={() => handleEdit(category)}>
+                {/* <DropdownMenuItem onClick={() => handleEdit(category)}>
                   <Pencil className="h-4 w-4" />
 
                   <span className="px-2">Edit</span>
-                </DropdownMenuItem>
+                </DropdownMenuItem> */}
 
                 <DropdownMenuItem
                   onClick={() => handleDelete(category.id)}
