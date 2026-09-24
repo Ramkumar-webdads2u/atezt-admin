@@ -1,39 +1,281 @@
+// "use client";
+
+// import * as React from "react";
+// import * as SelectPrimitive from "@radix-ui/react-select";
+// import { Check, ChevronDown, ChevronUp } from "lucide-react";
+
+// import { cn } from "@/lib/utils";
+// import { cva, type VariantProps } from "class-variance-authority";
+// import { InputColor, size } from "@/lib/type";
+
+// const Select = SelectPrimitive.Root;
+
+// const SelectGroup = SelectPrimitive.Group;
+
+// const SelectValue = SelectPrimitive.Value;
+
+// const selectVariants = cva(
+//   " w-full  px-3 h-10 text-sm flex [&>svg]:h-5 [&>svg]:w-5 rounded-md border border-input   justify-between items-center  read-only:bg-background  disabled:cursor-not-allowed disabled:opacity-50  transition duration-300 ",
+//   {
+//     variants: {
+//       color: {
+//         default:
+//           "border-default-200 text-default-500 focus:outline-hidden focus:border-default-500/50 disabled:bg-default-200  placeholder:text-accent-foreground/50 [&>svg]:stroke-default-600",
+//         primary:
+//           "border-primary text-primary focus:outline-hidden focus:border-primary/70 disabled:bg-primary/30 disabled:placeholder:text-primary  placeholder:text-primary/70 [&>svg]:stroke-primary",
+//         secondary:
+//           "border-secondary text-secondary focus:outline-hidden focus:border-secondary/70 disabled:bg-primary/30 disabled:placeholder:text-primary  placeholder:text-primary/70 [&>svg]:stroke-primary",
+//         info: "border-info/50 text-info focus:outline-hidden focus:border-info/70 disabled:bg-info/30 disabled:placeholder:text-info  placeholder:text-info/70",
+//         warning:
+//           "border-warning/50 text-warning focus:outline-hidden focus:border-warning/70 disabled:bg-warning/30 disabled:placeholder:text-info  placeholder:text-warning/70",
+//         success:
+//           "border-success/50 text-success focus:outline-hidden focus:border-success/70 disabled:bg-success/30 disabled:placeholder:text-info  placeholder:text-success/70",
+//         destructive:
+//           "border-destructive/50 text-destructive focus:outline-hidden focus:border-destructive/70 disabled:bg-destructive/30 disabled:placeholder:text-destructive  placeholder:text-destructive/70",
+//       },
+
+//       size: {
+//         sm: "h-8 text-xs",
+//         default: "h-9 text-xs",
+//         md: "h-10 text-sm",
+//         lg: "h-12 text-base",
+//       },
+//     },
+
+//     defaultVariants: {
+//       color: "default",
+//       size: "default",
+//     },
+//   },
+// );
+// interface SelectTriggerProps
+//   extends
+//     React.ComponentPropsWithoutRef<typeof SelectPrimitive.Trigger>,
+//     VariantProps<typeof selectVariants> {
+//   size?: size;
+//   color?: InputColor;
+// }
+// const SelectTrigger = React.forwardRef<
+//   React.ElementRef<typeof SelectPrimitive.Trigger>,
+//   SelectTriggerProps
+// >(({ className, children, color, size, ...props }, ref) => (
+//   <SelectPrimitive.Trigger
+//     ref={ref}
+//     className={cn(selectVariants({ color, size }), className)}
+//     {...props}
+//   >
+//     {children}
+//     <SelectPrimitive.Icon asChild>
+//       <ChevronDown className="h-4 w-4 " />
+//     </SelectPrimitive.Icon>
+//   </SelectPrimitive.Trigger>
+// ));
+// SelectTrigger.displayName = SelectPrimitive.Trigger.displayName;
+
+// const SelectScrollUpButton = React.forwardRef<
+//   React.ElementRef<typeof SelectPrimitive.ScrollUpButton>,
+//   React.ComponentPropsWithoutRef<typeof SelectPrimitive.ScrollUpButton>
+// >(({ className, ...props }, ref) => (
+//   <SelectPrimitive.ScrollUpButton
+//     ref={ref}
+//     className={cn(
+//       "flex cursor-default items-center justify-center py-1",
+//       className,
+//     )}
+//     {...props}
+//   >
+//     <ChevronUp className="h-4 w-4" />
+//   </SelectPrimitive.ScrollUpButton>
+// ));
+// SelectScrollUpButton.displayName = SelectPrimitive.ScrollUpButton.displayName;
+
+// const SelectScrollDownButton = React.forwardRef<
+//   React.ElementRef<typeof SelectPrimitive.ScrollDownButton>,
+//   React.ComponentPropsWithoutRef<typeof SelectPrimitive.ScrollDownButton>
+// >(({ className, ...props }, ref) => (
+//   <SelectPrimitive.ScrollDownButton
+//     ref={ref}
+//     className={cn(
+//       "flex cursor-default items-center justify-center py-1",
+//       className,
+//     )}
+//     {...props}
+//   >
+//     <ChevronDown className="h-4 w-4 " />
+//   </SelectPrimitive.ScrollDownButton>
+// ));
+// SelectScrollDownButton.displayName =
+//   SelectPrimitive.ScrollDownButton.displayName;
+
+// const SelectContent = React.forwardRef<
+//   React.ElementRef<typeof SelectPrimitive.Content>,
+//   React.ComponentPropsWithoutRef<typeof SelectPrimitive.Content> & {
+//     searchable?: boolean;
+//     searchPlaceholder?: string;
+//   }
+// >(
+//   (
+//     {
+//       className,
+//       children,
+//       position = "popper",
+//       searchable = false,
+//       searchPlaceholder = "Search...",
+//       ...props
+//     },
+//     ref,
+//   ) => {
+//     const [search, setSearch] = React.useState("");
+
+//     // Filter children (SelectItem only)
+//     const filteredChildren = React.Children.toArray(children).filter(
+//       (child: any) => {
+//         if (!search) return true;
+
+//         if (child?.props?.children) {
+//           const text = String(child.props.children).toLowerCase();
+//           return text.includes(search.toLowerCase());
+//         }
+
+//         return true;
+//       },
+//     );
+
+//     return (
+//       <SelectPrimitive.Portal>
+//         <SelectPrimitive.Content
+//           ref={ref}
+//           className={cn(
+//             "relative z-50 max-h-96 min-w-32 overflow-hidden rounded-md border bg-popover shadow-md",
+//             className,
+//           )}
+//           position={position}
+//           {...props}
+//         >
+//           {/* Search Input */}
+//           {searchable && (
+//             <div className="p-2 sticky top-0 z-10">
+//               <input
+//                 autoFocus
+//                 type="text"
+//                 onKeyDown={(e) => e.stopPropagation()}
+//                 placeholder={searchPlaceholder}
+//                 className="w-full border px-2 py-1 rounded text-sm"
+//                 value={search}
+//                 onChange={(e) => setSearch(e.target.value)}
+//               />
+//             </div>
+//           )}
+//           <SelectScrollUpButton />
+
+//           <SelectPrimitive.Viewport className="p-1">
+//             {filteredChildren.length === 0 ? (
+//               <p className="p-2 text-sm text-gray-400">No results</p>
+//             ) : (
+//               filteredChildren
+//             )}
+//           </SelectPrimitive.Viewport>
+
+//           <SelectScrollDownButton />
+//         </SelectPrimitive.Content>
+//       </SelectPrimitive.Portal>
+//     );
+//   },
+// );
+// SelectContent.displayName = SelectPrimitive.Content.displayName;
+
+// const SelectLabel = React.forwardRef<
+//   React.ElementRef<typeof SelectPrimitive.Label>,
+//   React.ComponentPropsWithoutRef<typeof SelectPrimitive.Label>
+// >(({ className, ...props }, ref) => (
+//   <SelectPrimitive.Label
+//     ref={ref}
+//     className={cn("py-1.5 ps-4 pr-2 text-sm font-semibold", className)}
+//     {...props}
+//   />
+// ));
+// SelectLabel.displayName = SelectPrimitive.Label.displayName;
+
+// const SelectItem = React.forwardRef<
+//   React.ElementRef<typeof SelectPrimitive.Item>,
+//   React.ComponentPropsWithoutRef<typeof SelectPrimitive.Item>
+// >(({ className, children, ...props }, ref) => (
+//   <SelectPrimitive.Item
+//     ref={ref}
+//     className={cn(
+//       "relative flex w-full cursor-default select-none items-center rounded-sm py-1.5 ps-4 pe-2 text-sm outline-hidden focus:bg-accent focus:text-accent-foreground data-disabled:pointer-events-none data-disabled:opacity-50",
+//       className,
+//     )}
+//     {...props}
+//   >
+//     <span className="absolute inset-e-2 flex h-3.5 w-3.5 items-center justify-center">
+//       <SelectPrimitive.ItemIndicator>
+//         <Check className="h-4 w-4" />
+//       </SelectPrimitive.ItemIndicator>
+//     </span>
+
+//     <SelectPrimitive.ItemText>{children}</SelectPrimitive.ItemText>
+//   </SelectPrimitive.Item>
+// ));
+// SelectItem.displayName = SelectPrimitive.Item.displayName;
+
+// const SelectSeparator = React.forwardRef<
+//   React.ElementRef<typeof SelectPrimitive.Separator>,
+//   React.ComponentPropsWithoutRef<typeof SelectPrimitive.Separator>
+// >(({ className, ...props }, ref) => (
+//   <SelectPrimitive.Separator
+//     ref={ref}
+//     className={cn("-mx-1 my-1 h-px bg-muted", className)}
+//     {...props}
+//   />
+// ));
+// SelectSeparator.displayName = SelectPrimitive.Separator.displayName;
+
+// export {
+//   Select,
+//   SelectGroup,
+//   SelectValue,
+//   SelectTrigger,
+//   SelectContent,
+//   SelectLabel,
+//   SelectItem,
+//   SelectSeparator,
+//   SelectScrollUpButton,
+//   SelectScrollDownButton,
+// };
+
 "use client";
 
 import * as React from "react";
 import * as SelectPrimitive from "@radix-ui/react-select";
 import { Check, ChevronDown, ChevronUp } from "lucide-react";
-
 import { cn } from "@/lib/utils";
 import { cva, type VariantProps } from "class-variance-authority";
 import { InputColor, size } from "@/lib/type";
 
 const Select = SelectPrimitive.Root;
-
 const SelectGroup = SelectPrimitive.Group;
-
 const SelectValue = SelectPrimitive.Value;
 
 const selectVariants = cva(
-  " w-full  px-3 h-10 text-sm flex [&>svg]:h-5 [&>svg]:w-5 rounded-md border border-input   justify-between items-center  read-only:bg-background  disabled:cursor-not-allowed disabled:opacity-50  transition duration-300 ",
+  "w-full px-3 h-10 text-sm flex [&>svg]:h-5 [&>svg]:w-5 rounded-md border border-input justify-between items-center read-only:bg-background disabled:cursor-not-allowed disabled:opacity-50 transition duration-300",
   {
     variants: {
       color: {
         default:
-          "border-default-200 text-default-500 focus:outline-hidden focus:border-default-500/50 disabled:bg-default-200  placeholder:text-accent-foreground/50 [&>svg]:stroke-default-600",
+          "border-default-200 text-default-500 focus:outline-hidden focus:border-default-500/50 disabled:bg-default-200 placeholder:text-accent-foreground/50 [&>svg]:stroke-default-600",
         primary:
-          "border-primary text-primary focus:outline-hidden focus:border-primary/70 disabled:bg-primary/30 disabled:placeholder:text-primary  placeholder:text-primary/70 [&>svg]:stroke-primary",
+          "border-primary text-primary focus:outline-hidden focus:border-primary/70 disabled:bg-primary/30 disabled:placeholder:text-primary placeholder:text-primary/70 [&>svg]:stroke-primary",
         secondary:
-          "border-secondary text-secondary focus:outline-hidden focus:border-secondary/70 disabled:bg-primary/30 disabled:placeholder:text-primary  placeholder:text-primary/70 [&>svg]:stroke-primary",
-        info: "border-info/50 text-info focus:outline-hidden focus:border-info/70 disabled:bg-info/30 disabled:placeholder:text-info  placeholder:text-info/70",
+          "border-secondary text-secondary focus:outline-hidden focus:border-secondary/70 disabled:bg-primary/30 disabled:placeholder:text-primary placeholder:text-primary/70 [&>svg]:stroke-primary",
+        info: "border-info/50 text-info focus:outline-hidden focus:border-info/70 disabled:bg-info/30 disabled:placeholder:text-info placeholder:text-info/70",
         warning:
-          "border-warning/50 text-warning focus:outline-hidden focus:border-warning/70 disabled:bg-warning/30 disabled:placeholder:text-info  placeholder:text-warning/70",
+          "border-warning/50 text-warning focus:outline-hidden focus:border-warning/70 disabled:bg-warning/30 disabled:placeholder:text-info placeholder:text-warning/70",
         success:
-          "border-success/50 text-success focus:outline-hidden focus:border-success/70 disabled:bg-success/30 disabled:placeholder:text-info  placeholder:text-success/70",
+          "border-success/50 text-success focus:outline-hidden focus:border-success/70 disabled:bg-success/30 disabled:placeholder:text-info placeholder:text-success/70",
         destructive:
-          "border-destructive/50 text-destructive focus:outline-hidden focus:border-destructive/70 disabled:bg-destructive/30 disabled:placeholder:text-destructive  placeholder:text-destructive/70",
+          "border-destructive/50 text-destructive focus:outline-hidden focus:border-destructive/70 disabled:bg-destructive/30 disabled:placeholder:text-destructive placeholder:text-destructive/70",
       },
-
       size: {
         sm: "h-8 text-xs",
         default: "h-9 text-xs",
@@ -41,20 +283,20 @@ const selectVariants = cva(
         lg: "h-12 text-base",
       },
     },
-
     defaultVariants: {
       color: "default",
       size: "default",
     },
   },
 );
+
 interface SelectTriggerProps
-  extends
-    React.ComponentPropsWithoutRef<typeof SelectPrimitive.Trigger>,
+  extends React.ComponentPropsWithoutRef<typeof SelectPrimitive.Trigger>,
     VariantProps<typeof selectVariants> {
   size?: size;
   color?: InputColor;
 }
+
 const SelectTrigger = React.forwardRef<
   React.ElementRef<typeof SelectPrimitive.Trigger>,
   SelectTriggerProps
@@ -66,7 +308,7 @@ const SelectTrigger = React.forwardRef<
   >
     {children}
     <SelectPrimitive.Icon asChild>
-      <ChevronDown className="h-4 w-4 " />
+      <ChevronDown className="h-4 w-4" />
     </SelectPrimitive.Icon>
   </SelectPrimitive.Trigger>
 ));
@@ -89,30 +331,19 @@ const SelectScrollUpButton = React.forwardRef<
 ));
 SelectScrollUpButton.displayName = SelectPrimitive.ScrollUpButton.displayName;
 
-const SelectScrollDownButton = React.forwardRef<
-  React.ElementRef<typeof SelectPrimitive.ScrollDownButton>,
-  React.ComponentPropsWithoutRef<typeof SelectPrimitive.ScrollDownButton>
->(({ className, ...props }, ref) => (
-  <SelectPrimitive.ScrollDownButton
-    ref={ref}
-    className={cn(
-      "flex cursor-default items-center justify-center py-1",
-      className,
-    )}
-    {...props}
-  >
-    <ChevronDown className="h-4 w-4 " />
-  </SelectPrimitive.ScrollDownButton>
-));
-SelectScrollDownButton.displayName =
-  SelectPrimitive.ScrollDownButton.displayName;
+interface SelectContentProps
+  extends React.ComponentPropsWithoutRef<typeof SelectPrimitive.Content> {
+  searchable?: boolean;
+  searchPlaceholder?: string;
+}
+
+type SelectChildProps = {
+  children?: React.ReactNode;
+};
 
 const SelectContent = React.forwardRef<
   React.ElementRef<typeof SelectPrimitive.Content>,
-  React.ComponentPropsWithoutRef<typeof SelectPrimitive.Content> & {
-    searchable?: boolean;
-    searchPlaceholder?: string;
-  }
+  SelectContentProps
 >(
   (
     {
@@ -127,19 +358,20 @@ const SelectContent = React.forwardRef<
   ) => {
     const [search, setSearch] = React.useState("");
 
-    // Filter children (SelectItem only)
-    const filteredChildren = React.Children.toArray(children).filter(
-      (child: any) => {
-        if (!search) return true;
+    const filteredChildren = React.Children.toArray(children).filter((child) => {
+      if (!search) return true;
+      if (!React.isValidElement<SelectChildProps>(child)) return true;
 
-        if (child?.props?.children) {
-          const text = String(child.props.children).toLowerCase();
-          return text.includes(search.toLowerCase());
-        }
+      const childText = React.Children.toArray(child.props.children)
+        .filter(
+          (value): value is string | number =>
+            typeof value === "string" || typeof value === "number",
+        )
+        .join(" ")
+        .toLowerCase();
 
-        return true;
-      },
-    );
+      return childText.includes(search.toLowerCase());
+    });
 
     return (
       <SelectPrimitive.Portal>
@@ -152,20 +384,20 @@ const SelectContent = React.forwardRef<
           position={position}
           {...props}
         >
-          {/* Search Input */}
           {searchable && (
-            <div className="p-2 sticky top-0 z-10">
+            <div className="sticky top-0 z-10 p-2">
               <input
                 autoFocus
                 type="text"
-                onKeyDown={(e) => e.stopPropagation()}
+                onKeyDown={(event) => event.stopPropagation()}
                 placeholder={searchPlaceholder}
-                className="w-full border px-2 py-1 rounded text-sm"
+                className="w-full rounded border px-2 py-1 text-sm"
                 value={search}
-                onChange={(e) => setSearch(e.target.value)}
+                onChange={(event) => setSearch(event.target.value)}
               />
             </div>
           )}
+
           <SelectScrollUpButton />
 
           <SelectPrimitive.Viewport className="p-1">
@@ -183,6 +415,23 @@ const SelectContent = React.forwardRef<
   },
 );
 SelectContent.displayName = SelectPrimitive.Content.displayName;
+
+const SelectScrollDownButton = React.forwardRef<
+  React.ElementRef<typeof SelectPrimitive.ScrollDownButton>,
+  React.ComponentPropsWithoutRef<typeof SelectPrimitive.ScrollDownButton>
+>(({ className, ...props }, ref) => (
+  <SelectPrimitive.ScrollDownButton
+    ref={ref}
+    className={cn(
+      "flex cursor-default items-center justify-center py-1",
+      className,
+    )}
+    {...props}
+  >
+    <ChevronDown className="h-4 w-4" />
+  </SelectPrimitive.ScrollDownButton>
+));
+SelectScrollDownButton.displayName = SelectPrimitive.ScrollDownButton.displayName;
 
 const SelectLabel = React.forwardRef<
   React.ElementRef<typeof SelectPrimitive.Label>,
@@ -213,7 +462,6 @@ const SelectItem = React.forwardRef<
         <Check className="h-4 w-4" />
       </SelectPrimitive.ItemIndicator>
     </span>
-
     <SelectPrimitive.ItemText>{children}</SelectPrimitive.ItemText>
   </SelectPrimitive.Item>
 ));

@@ -7,7 +7,7 @@ const BASE_URL =
 
 export const APIURLS = {
   baseUrl: BASE_URL.endsWith("/") ? BASE_URL : `${BASE_URL}/`,
-  imageUrl: BASE_URL,
+  imageUrl: process.env.NEXT_PUBLIC_IMAGE_URL,
 };
 
 export const APPCONFIG = {
@@ -58,17 +58,21 @@ export const APICONSTANT = {
   // =========================
   // EXAMS
   // =========================
-  CreateExam: "exams/",
   GetExams: "exams/",
-  CreateExamQuestions: "exams/{exam_id}/questions",
-  UpdateExamQuestions: "exams/{exam_id}/questions",
-  GetExamQuestions: "exams/{exam_id}/questions",
-  UpdateExam: "exams/{exam_id}",
   GetExam: "exams/{exam_id}",
-  DeleteExam: "exams/{exam_id}",
-  UpdateExamStatus: "exams/{exam_id}/status",
-  ValidateQuestionImport: "exams/questions/validate",
   GetExamFormData: "exams/fields/form-data",
+  GetExamQuestions: "exams/{exam_id}/questions",
+
+  CreateExam: "exams/",
+  CreateExamQuestions: "exams/{exam_id}/questions",
+  ValidateQuestionImport: "exams/questions/validate",
+
+  UpdateExam: "exams/{exam_id}",
+  UpdateExamQuestions: "exams/{exam_id}/questions",
+
+  DeleteExam: "exams/{exam_id}",
+
+  UpdateExamStatus: "exams/{exam_id}/status",
 
   // =========================
   // ADMIN USERS
